@@ -1,16 +1,29 @@
-from flask import Blueprint, redirect, request, render_template, url_for
+import os
+
+from flask import (Blueprint, current_app, flash, redirect,
+                   request, render_template, url_for)
+from werkzeug.utils import secure_filename
 
 rename = Blueprint('rename', __name__)
 
 
 @rename.route('/rename', methods=['GET', 'POST'])
-def photos():
+def upload_photos():
     if request.method == 'POST':
+
         uploaded_file = request.files['file']
+
         for uploaded_file in request.files.getlist('file'):
-            if uploaded_file.filename != '':
-                uploaded_file.save(uploaded_file.filename)
-        return redirect(url_for('rename.photos'))
+            if uploaded_file.filename == '':
+                flash('No selected file')
+                return redirect(request.url)
+            else:
+                secured_uploaded_file = secure_filename(uploaded_file.filename)
+                uploaded_file.save(os.path.join(
+                    current_app.config['PHOTOS_FOLDER'], secured_uploaded_file))
+            flash('File successfully uploaded')
+            return redirect(url_for('rename.upload_photos'))
+
     return render_template('rename.html', title='Rename Photos')
 
 

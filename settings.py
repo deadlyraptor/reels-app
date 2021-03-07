@@ -6,3 +6,4 @@ load_dotenv()
 
 class Config():
     SECRET_KEY = os.getenv('SECRET_KEY')
+    PHOTOS_FOLDER = 'uploads/photos'
