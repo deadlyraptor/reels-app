@@ -7,12 +7,11 @@ from werkzeug.utils import secure_filename
 rename = Blueprint('rename', __name__)
 
 
-@rename.route('/rename', methods=['GET', 'POST'])
+@rename.route('/upload-photos', methods=['GET', 'POST'])
 def upload_photos():
     if request.method == 'POST':
 
         uploaded_file = request.files['file']
-
         for uploaded_file in request.files.getlist('file'):
             if uploaded_file.filename == '':
                 flash('No selected file')
@@ -22,23 +21,30 @@ def upload_photos():
                 uploaded_file.save(os.path.join(
                     current_app.config['PHOTOS_FOLDER'], secured_uploaded_file))
             flash('File successfully uploaded')
-            return redirect(url_for('rename.upload_photos'))
+            return redirect(url_for('rename.rename_photos'))
 
-    return render_template('rename.html', title='Rename Photos')
+    return render_template('upload-photos.html', title='Upload Photos')
+
+
+@rename.route('/rename-photos', methods=['GET', 'POST'])
+def rename_photos():
+    if request.method == 'POST':
+        name = request.form['name'].lower()
+        path = current_app.config['PHOTOS_FOLDER']
+
+        with os.scandir(path) as directory:
+            for number, photo in enumerate(directory, start=1):
+                new_name = f'{name}-still-{str(number).zfill(2)}.{photo.name.split(".")[1]}'
+                os.rename(photo, f'{path}/{new_name}')
+
+        return redirect(url_for('rename.download_photos'))
+
+    return render_template('rename-photos.html', title='Rename Photos')
 
 
 """
 import sys
 import os
-
-# tkinter is only used for directory prompt
-root = tk.Tk()
-root.withdraw()  # hides default window
-directory = filedialog.askdirectory()
-
-# if user does not select a directory, exit the script
-if not directory:
-    sys.exit()
 
 base_name = input('Enter the new base filename: ')
 

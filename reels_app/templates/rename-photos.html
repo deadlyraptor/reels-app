@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}{{ title }}{% endblock title %}
+{% block content %}
+<h1>Rename Photos</h1>
+
+<br>
+
+<form method="POST" action="">
+    <label for="name">Enter the new filename: </label>
+    <input type="text" name="name">
+    <input type="submit" value="Submit">
+</form>
+
+<br><br>
+<hr>
+<p><a href="{{ url_for('main.index') }}">Go back</a></p>
+{% endblock content %}
