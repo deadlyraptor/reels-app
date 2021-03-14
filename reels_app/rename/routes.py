@@ -22,7 +22,8 @@ def upload_photos():
             else:
                 secured_uploaded_file = secure_filename(uploaded_file.filename)
                 uploaded_file.save(os.path.join(
-                    current_app.config['PHOTOS_FOLDER'], secured_uploaded_file))
+                    current_app.config['PHOTOS_FOLDER'],
+                    secured_uploaded_file))
         flash('File successfully uploaded')
         return redirect(url_for('rename.rename_photos'))
 
@@ -37,7 +38,8 @@ def rename_photos():
 
         with os.scandir(path) as directory:
             for number, photo in enumerate(directory, start=1):
-                new_name = f'{name}-still-{str(number).zfill(2)}.{photo.name.split(".")[1]}'
+                new_name = f'{name}-\
+                    still-{str(number).zfill(2)}.{photo.name.split(".")[1]}'
                 os.rename(photo, f'{path}/{new_name}')
 
         return redirect(url_for('rename.download_photos'))
