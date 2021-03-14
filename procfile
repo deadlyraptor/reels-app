@@ -1,1 +1,1 @@
-web: flask gunicorn; 'reels-app:create_app()'
+web: flask gunicorn; 'reels_app:create_app()'
