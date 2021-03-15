@@ -15,11 +15,9 @@ def index():
             os.remove(os.path.join('csvs', item))
 
         for item in os.listdir('uploads/photos'):
-            print(os.path.join('uploads/photos', item))
             os.remove(os.path.join('uploads/photos', item))
 
         for item in os.listdir('uploads/spreadsheets'):
-            print(os.path.join('uploads/spreadsheets', item))
             os.remove(os.path.join('uploads/spreadsheets', item))
 
         return redirect(url_for('main.index'))

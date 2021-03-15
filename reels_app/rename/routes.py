@@ -38,8 +38,7 @@ def rename_photos():
 
         with os.scandir(path) as directory:
             for number, photo in enumerate(directory, start=1):
-                new_name = f'{name}-\
-                    still-{str(number).zfill(2)}.{photo.name.split(".")[1]}'
+                new_name = f'{name}-still-{str(number).zfill(2)}.{photo.name.split(".")[1]}'  # noqa
                 os.rename(photo, f'{path}/{new_name}')
 
         return redirect(url_for('rename.download_photos'))
