@@ -11,14 +11,14 @@ main = Blueprint('main', __name__)
 def index():
     """Render the index/home page."""
     if request.method == 'POST':
-        for item in os.listdir('csvs'):
-            os.remove(os.path.join('csvs', item))
 
-        for item in os.listdir('uploads/photos'):
-            os.remove(os.path.join('uploads/photos', item))
+        def delete_files(directory):
+            for item in os.listdir(directory):
+                os.remove(os.path.join(directory, item))
 
-        for item in os.listdir('uploads/spreadsheets'):
-            os.remove(os.path.join('uploads/spreadsheets', item))
+        delete_files('csvs')
+        delete_files('uploads/photos')
+        delete_files('uploads/spreadsheets')
 
         return redirect(url_for('main.index'))
 

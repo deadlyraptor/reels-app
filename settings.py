@@ -6,10 +6,9 @@ load_dotenv()
 
 def validate_directory(directory):
     if os.path.exists(directory):
-        print('The directory exists')
+        pass
     else:
         os.mkdir(directory)
-        print('Made directory.')
 
 
 validate_directory('csvs')
