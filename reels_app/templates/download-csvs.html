@@ -3,18 +3,18 @@
 {% block content %}
 <h1>Download CSVs</h1>
 
-<br>
+{% if files %}
+<ul>
+    {% for file in files %}
+    <li>{{ file }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
 
-{% for file in files %}
-<p>{{ file }}</p>
-{% endfor %}
-
-<br>
 <form method="POST">
     <p><input type="submit" value="Download"></p>
 </form>
 
-<br><br>
 <hr>
 <p><a href="{{ url_for('main.index') }}">Go back</a></p>
 {% endblock content %}

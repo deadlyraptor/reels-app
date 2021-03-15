@@ -6,20 +6,32 @@
 
 <p>Select an option below.</p>
 
-<h2>Spreadchimp</h2>
-<p>Upload a spreadsheet from Agile so the customer data can be reformatted as distinct CSV files (one per film) for easy
-    upload to MailChimp.</p>
-<p><a href="{{ url_for('spreadchimp.upload_spreadsheet') }}">Upload spreadsheet</a>
-</p>
+<section>
+    <h2>Spreadchimp</h2>
+    <p>Upload a spreadsheet from Agile so the customer data can be reformatted as distinct CSV files (one per film) for
+        easy
+        upload to MailChimp.</p>
+    <a href="{{ url_for('spreadchimp.upload_spreadsheet') }}">Upload spreadsheet</a>
+</section>
 
-<h2>Rename Photos</h2>
-<p>Upload a group of photos to quickly rename them all.</p>
+<section>
+    <h2>Rename Photos</h2>
+    <p>Upload a group of photos to quickly rename them all.</p>
 
-<a href="{{ url_for('rename.upload_photos') }}">Rename photos</a>
+    <a href="{{ url_for('rename.upload_photos') }}">Rename photos</a>
+</section>
 
-<h2>Delete Files</h2>
-<form method="POST">
-    <p><input type="submit" value="Delete"></p>
-</form>
+<section>
+    <h2>Delete Files</h2>
+    <p>Click this button to delete all of the files located in the following directories:</p>
+    <ul>
+        <li>CSVs</li>
+        <li>uploads/photos</li>
+        <li>uploads/spreadsheets</li>
+    </ul>
+    <form method="POST">
+        <input type="submit" value="Delete" class="btn btn-danger">
+    </form>
+</section>
 
 {% endblock content %}

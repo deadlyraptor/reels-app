@@ -17,14 +17,14 @@ def upload_photos():
 
         for uploaded_file in request.files.getlist('file'):
             if uploaded_file.filename == '':
-                flash('No selected file')
+                flash('No selected file', 'warning')
                 return redirect(request.url)
             else:
                 secured_uploaded_file = secure_filename(uploaded_file.filename)
                 uploaded_file.save(os.path.join(
                     current_app.config['PHOTOS_FOLDER'],
                     secured_uploaded_file))
-        flash('File successfully uploaded')
+        flash('File successfully uploaded', 'success')
         return redirect(url_for('rename.rename_photos'))
 
     return render_template('upload-photos.html', title='Upload Photos')
@@ -36,12 +36,17 @@ def rename_photos():
         name = request.form['name'].lower()
         path = current_app.config['PHOTOS_FOLDER']
 
-        with os.scandir(path) as directory:
-            for number, photo in enumerate(directory, start=1):
-                new_name = f'{name}-still-{str(number).zfill(2)}.{photo.name.split(".")[1]}'  # noqa
-                os.rename(photo, f'{path}/{new_name}')
+        if name == '':
+            flash('Enter a new base filename', 'warning')
+            return redirect(request.url)
+        else:
+            with os.scandir(path) as directory:
+                for number, photo in enumerate(directory, start=1):
+                    new_name = f'{name}-still-{str(number).zfill(2)}.{photo.name.split(".")[1]}'  # noqa
+                    os.rename(photo, f'{path}/{new_name}')
 
-        return redirect(url_for('rename.download_photos'))
+            flash('Photos successfully renamed', 'success')
+            return redirect(url_for('rename.download_photos'))
 
     return render_template('rename-photos.html', title='Rename Photos')
 

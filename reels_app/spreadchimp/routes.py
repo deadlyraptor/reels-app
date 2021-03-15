@@ -19,14 +19,14 @@ def upload_spreadsheet():
 
         uploaded_file = request.files['file']
         if uploaded_file.filename == '':
-            flash('No selected file')
+            flash('No file selected', 'warning')
             return redirect(request.url)
         else:
             secured_uploaded_file = secure_filename(uploaded_file.filename)
             uploaded_file.save(os.path.join(
                 current_app.config['SPREADSHEET_FOLDER'],
                 secured_uploaded_file))
-        flash('File successfully uploaded')
+        flash('File uploaded successfully', 'success')
         return redirect(url_for('spreadchimp.analyze_spreadsheet'))
 
     return render_template('upload-spreadsheet.html',

@@ -1,6 +1,6 @@
 import os
 
-from flask import Blueprint, request, render_template
+from flask import Blueprint, flash, request, render_template
 from flask.helpers import url_for
 from werkzeug.utils import redirect
 
@@ -20,6 +20,7 @@ def index():
         delete_files('uploads/photos')
         delete_files('uploads/spreadsheets')
 
+        flash('Files deleted successfuly', 'success')
         return redirect(url_for('main.index'))
 
     return render_template('index.html', title='Home')
