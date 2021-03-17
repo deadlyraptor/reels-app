@@ -43,7 +43,9 @@ def analyze_spreadsheet():
         try:
             spready(current_app.config['SPREADSHEET_FOLDER'])
         except XLRDError:
-            return 'Unsupported file type. Spreadsheet must be .xls, not xlsx.'
+            flash('Unsupported file type. Spreadsheet must be .xls, not xlsx.',
+                  'warning')
+            return redirect(url_for('main.index'))
 
         return redirect(url_for('spreadchimp.download_csvs'))
 
