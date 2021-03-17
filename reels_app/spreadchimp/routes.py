@@ -35,11 +35,13 @@ def upload_spreadsheet():
 
 @spreadchimp.route('/analyze-spreadsheet', methods=['GET', 'POST'])
 def analyze_spreadsheet():
+    spreadsheet = os.listdir(current_app.config['SPREADSHEET_FOLDER'])
+
     if request.method == 'POST':
         spready(current_app.config['SPREADSHEET_FOLDER'])
         return redirect(url_for('spreadchimp.download_csvs'))
 
-    return render_template('analyze-spreadsheet.html',
+    return render_template('analyze-spreadsheet.html', spreadsheet=spreadsheet,
                            title='Analyze Spreadsheet')
 
 
