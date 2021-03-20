@@ -19,6 +19,7 @@ spreadchimp = Blueprint('spreadchimp', __name__)
 def upload_spreadsheet():
     if request.method == 'POST':
 
+        # upload the spreadsheet
         uploaded_file = request.files['file']
         if uploaded_file.filename == '':
             flash('No file selected', 'warning')
@@ -28,18 +29,8 @@ def upload_spreadsheet():
             uploaded_file.save(os.path.join(
                 current_app.config['SPREADSHEET_FOLDER'],
                 secured_uploaded_file))
-        flash('File uploaded successfully', 'success')
-        return redirect(url_for('spreadchimp.analyze_spreadsheet'))
 
-    return render_template('upload-spreadsheet.html',
-                           title='Upload Spreadsheet')
-
-
-@spreadchimp.route('/analyze-spreadsheet', methods=['GET', 'POST'])
-def analyze_spreadsheet():
-    spreadsheet = os.listdir(current_app.config['SPREADSHEET_FOLDER'])
-
-    if request.method == 'POST':
+        # creates the CSV files
         try:
             spready(current_app.config['SPREADSHEET_FOLDER'])
         except XLRDError:
@@ -49,8 +40,8 @@ def analyze_spreadsheet():
 
         return redirect(url_for('spreadchimp.download_csvs'))
 
-    return render_template('analyze-spreadsheet.html', spreadsheet=spreadsheet,
-                           title='Analyze Spreadsheet')
+    return render_template('upload-spreadsheet.html',
+                           title='Upload Spreadsheet')
 
 
 @spreadchimp.route('/download-csvs', methods=['GET', 'POST'])
