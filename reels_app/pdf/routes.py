@@ -4,7 +4,7 @@ from flask import (Blueprint, current_app, flash, redirect,
                    request, render_template, url_for)
 from werkzeug.utils import secure_filename
 
-from PyPDF2 import PdfFileReader, PdfFileWriter
+from reels_app.pdf.pdf import split
 
 pdf = Blueprint('pdf', __name__)
 
@@ -23,6 +23,9 @@ def upload_pdf():
                     current_app.config['PDF_FOLDER'],
                     secured_uploaded_file))
         flash('PDF successfully uploaded', 'success')
-        return redirect(url_for('pdf.split_pdf'))
+
+        # split the PDF
+        split(current_app.config['PDF_FOLDER'], 'box-office-page')
+        return redirect(url_for('main.index'))
 
     return render_template('upload-pdf.html', title='Upload PDF')
