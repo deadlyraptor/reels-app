@@ -24,7 +24,7 @@ def upload_photos():
                 uploaded_file.save(os.path.join(
                     current_app.config['PHOTOS_FOLDER'],
                     secured_uploaded_file))
-        flash('File successfully uploaded', 'success')
+        flash('Photos successfully uploaded', 'success')
         return redirect(url_for('rename.rename_photos'))
 
     return render_template('upload-photos.html', title='Upload Photos')

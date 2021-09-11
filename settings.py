@@ -15,9 +15,11 @@ validate_directory('csvs')
 validate_directory('uploads')
 validate_directory('uploads/spreadsheets')
 validate_directory('uploads/photos')
+validate_directory('uploads/pdfs')
 
 
 class Config():
     SECRET_KEY = os.getenv('SECRET_KEY')
     PHOTOS_FOLDER = 'uploads/photos'
     SPREADSHEET_FOLDER = 'uploads/spreadsheets'
+    PDF_FOLDER = 'uploads/pdfs'

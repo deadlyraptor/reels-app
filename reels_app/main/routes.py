@@ -19,6 +19,7 @@ def index():
         delete_files('csvs')
         delete_files('uploads/photos')
         delete_files('uploads/spreadsheets')
+        delete_files('uploads/pdfs')
 
         flash('Files deleted successfully', 'success')
         return redirect(url_for('main.index'))
