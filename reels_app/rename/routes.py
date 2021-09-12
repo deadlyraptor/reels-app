@@ -17,7 +17,7 @@ def upload_photos():
 
         for uploaded_file in request.files.getlist('file'):
             if uploaded_file.filename == '':
-                flash('No selected file', 'warning')
+                flash('No file selected', 'warning')
                 return redirect(request.url)
             else:
                 secured_uploaded_file = secure_filename(uploaded_file.filename)

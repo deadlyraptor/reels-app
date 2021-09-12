@@ -17,6 +17,7 @@ def index():
                 os.remove(os.path.join(directory, item))
 
         delete_files('csvs')
+        delete_files('pdfs')
         delete_files('uploads/photos')
         delete_files('uploads/spreadsheets')
         delete_files('uploads/pdfs')

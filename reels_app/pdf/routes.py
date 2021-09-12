@@ -25,7 +25,7 @@ def upload_pdf():
         flash('PDF successfully uploaded', 'success')
 
         # split the PDF
-        split(current_app.config['PDF_FOLDER'], 'box-office-page')
+        split(current_app.config['PDF_FOLDER'])
         return redirect(url_for('main.index'))
 
     return render_template('upload-pdf.html', title='Upload PDF')
