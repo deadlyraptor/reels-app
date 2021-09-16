@@ -4,41 +4,51 @@
 
 <h1>Welcome to Reels!</h1>
 
-<p>Select an option below.</p>
+<p>Select a script below.</p>
 
-<section>
-    <h2>Spreadchimp</h2>
-    <p>Upload a spreadsheet from Agile so the customer data can be reformatted as distinct CSV files (one per film) for
-        easy
-        upload to MailChimp.</p>
-    <a href="{{ url_for('spreadchimp.upload_spreadsheet') }}">Upload spreadsheet</a>
-</section>
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    <div class="col h-100">
+        <div class="card">
+            <div class="card-header">Coral Gables Art Cinema</div>
+            <div class="card-body d-flex flex-column">
+                <h5 class="card-title">Spreadchimp</h5>
+                <p class="card-text">Upload a spreadsheet from Agile so the customer data can be reformatted as distinct
+                    CSV files (one per film) for easy upload to MailChimp.</p>
+                <a href="{{ url_for('spreadchimp.upload_spreadsheet') }}" class="btn btn-primary mt-auto">Upload
+                    spreadsheet</a>
+            </div>
+        </div>
+    </div>
 
-<section>
-    <h2>Rename Photos</h2>
-    <p>Upload a group of photos to quickly rename them all.</p>
+    <div class="col">
+        <div class="card h-100">
+            <div class="card-header">Coral Gables Art Cinema</div>
+            <div class="card-body d-flex flex-column">
+                <h5 class="card-title">Rename Photos</h5>
+                <p class="card-text">Upload photos and rename them all.</p>
+                <a href="{{ url_for('rename.upload_photos') }}" class="btn btn-primary mt-auto">Upload spreadsheet</a>
+            </div>
+        </div>
+    </div>
 
-    <a href="{{ url_for('rename.upload_photos') }}">Upload photos</a>
-</section>
+    <div class="col">
+        <div class="card h-100">
+            <div class="card-header">AFI Silver</div>
+            <div class="card-body d-flex flex-column">
+                <h5 class="card-title">Split PDF</h5>
+                <p class="card-text">Upload a PDF and split the pages by film.</p>
+                <a href="{{ url_for('pdf.upload_pdf') }}" class="btn btn-primary mt-auto">Upload PDF</a>
+            </div>
+        </div>
+    </div>
+</div>
 
-<section>
-    <h2>Split PDF</h2>
-    <p>Upload a PDF and split the pages by film (AFI only!)</p>
-
-    <a href="{{ url_for('pdf.upload_pdf') }}">Upload pdf</a>
-</section>
-
-<section>
-    <h2>Delete Files</h2>
-    <p>Click this button to delete all of the files located in the following directories:</p>
-    <ul>
-        <li>CSVs</li>
-        <li>uploads/photos</li>
-        <li>uploads/spreadsheets</li>
-    </ul>
-    <form method="POST">
-        <input type="submit" value="Delete" class="btn btn-danger">
-    </form>
-</section>
+<div class="row mt-5">
+    <div class="col">
+        <form method="POST">
+            <input type="submit" value="Delete all uploaded files" class="btn btn-danger">
+        </form>
+    </div>
+</div>
 
 {% endblock content %}
