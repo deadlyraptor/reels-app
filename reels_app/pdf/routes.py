@@ -1,7 +1,10 @@
+import io
 import os
+import pathlib
+import zipfile
 
 from flask import (Blueprint, current_app, flash, redirect,
-                   request, render_template, url_for)
+                   request, render_template, url_for, send_file)
 from werkzeug.utils import secure_filename
 
 from reels_app.pdf.pdf import split
@@ -26,6 +29,29 @@ def upload_pdf():
 
         # split the PDF
         split(current_app.config['PDF_FOLDER'])
-        return redirect(url_for('main.index'))
+        return redirect(url_for('pdf.download_pdfs'))
 
     return render_template('upload-pdf.html', title='Upload PDF')
+
+
+@pdf.route('/download-pdfs', methods=['GET', 'POST'])
+def download_pdfs():
+    files = os.listdir('pdfs')
+
+    base_path = pathlib.Path('pdfs')
+
+    if request.method == 'POST':
+        data = io.BytesIO()
+
+        with zipfile.ZipFile(data, mode='w') as z:
+            for item in base_path.iterdir():
+                z.write(item, os.path.basename(item))
+
+        data.seek(0)
+
+        return send_file(data, mimetype='application/zip',
+                         as_attachment=True,
+                         attachment_filename='pdfs.zip')
+
+    return render_template('download-pdfs.html', files=files,
+                           title='Download PDFs')
