@@ -11,6 +11,7 @@ def split(directory):
     new_path = os.path.join(directory, item)
 
     pdf = PdfFileReader(new_path)
+
     for page in range(pdf.getNumPages()):
 
         # search for the film title
@@ -21,7 +22,7 @@ def split(directory):
         film_title = re.search('(?<=Film: )(.*)(?=DayTicket)(?s)', pdf_text)
         if film_title is None:
             # provides a default in case the regex returns None
-            name_of_split = 'box-office-page'
+            name_of_split = f'box-office-page-{page}'
         else:
             # remove quotation mark if used, such as in NTL
             # remove \n characters if found
