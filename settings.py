@@ -12,6 +12,7 @@ def validate_directory(directory):
 
 
 validate_directory('csvs')
+validate_directory('pdfs')
 validate_directory('uploads')
 validate_directory('uploads/spreadsheets')
 validate_directory('uploads/photos')
