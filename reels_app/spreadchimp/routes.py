@@ -63,5 +63,5 @@ def download_csvs():
                          as_attachment=True,
                          attachment_filename='csv.zip')
 
-    return render_template('download-csvs.html', files=files,
-                           title='Download CSVs')
+    return render_template('download-files.html', files=files,
+                           file_type='CSVs', title='Download CSVs')

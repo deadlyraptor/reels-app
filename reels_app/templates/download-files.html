@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block title %}{{ title }}{% endblock title %}
 {% block content %}
-<h1>Download CSVs</h1>
+<h1>Download {{ file_type }}</h1>
 
 {% if files %}
 <ul>
@@ -10,7 +10,7 @@
     {% endfor %}
 </ul>
 {% else %}
-<p>There are no CSVs to download.</p>
+<p>There are no {{ file_type }} to download.</p>
 {% endif %}
 
 <form method="POST">
