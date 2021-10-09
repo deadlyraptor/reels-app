@@ -22,7 +22,7 @@ def index():
         delete_files('uploads/spreadsheets')
         delete_files('uploads/pdfs')
 
-        flash('Files deleted successfully', 'success')
+        flash('Files successfully deleted', 'success')
         return redirect(url_for('main.index'))
 
     return render_template('index.html', title='Home')
