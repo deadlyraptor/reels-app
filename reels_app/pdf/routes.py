@@ -31,7 +31,7 @@ def upload_pdf():
         split(current_app.config['PDF_FOLDER'])
         return redirect(url_for('pdf.download_pdfs'))
 
-    return render_template('upload-pdf.html', title='Upload PDF')
+    return render_template('upload-pdf.html', title='Upload BOR')
 
 
 @pdf.route('/download-pdfs', methods=['GET', 'POST'])
