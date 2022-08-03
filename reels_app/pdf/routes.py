@@ -7,7 +7,7 @@ from flask import (Blueprint, current_app, flash, redirect,
                    request, render_template, url_for, send_file)
 from werkzeug.utils import secure_filename
 
-from reels_app.pdf.pdf import split
+from reels_app.pdf.pdf import split, rename_deluxe
 
 pdf = Blueprint('pdf', __name__)
 
@@ -32,6 +32,28 @@ def upload_pdf():
         return redirect(url_for('pdf.download_pdfs'))
 
     return render_template('upload-pdf.html', title='Upload BOR')
+
+
+@pdf.route('/upload-invoice', methods=['GET', 'POST'])
+def upload_invoice():
+    if request.method == 'POST':
+
+        for uploaded_file in request.files.getlist('file'):
+            if uploaded_file.filename == '':
+                flash('No invoice selected', 'warning')
+                return redirect(request.url)
+            else:
+                secured_uploaded_file = secure_filename(uploaded_file.filename)
+                uploaded_file.save(os.path.join(
+                    current_app.config['INVOICE_FOLDER'],
+                    secured_uploaded_file))
+        flash('Invoices successfully uploaded.', 'success')
+
+        # rename the PDF
+        rename_deluxe(current_app.config['INVOICE_FOLDER'])
+        return redirect(url_for('pdf.download_pdfs'))
+
+    return render_template('upload-invoice.html', title='Upload invoice')
 
 
 @pdf.route('/download-pdfs', methods=['GET', 'POST'])

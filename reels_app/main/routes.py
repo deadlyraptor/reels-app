@@ -21,6 +21,7 @@ def index():
         delete_files('uploads/photos')
         delete_files('uploads/spreadsheets')
         delete_files('uploads/pdfs')
+        delete_files('uploads/invoices')
 
         flash('Files successfully deleted', 'success')
         return redirect(url_for('main.index'))
