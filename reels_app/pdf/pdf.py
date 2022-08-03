@@ -53,7 +53,7 @@ def rename_deluxe(directory):
 
         # get film title and strip new lines
         film_title = re.search(
-            '(?<=Title: )(.*)(?= 1\n4000000119)(?s)', pdf_text).group(0).strip()
+            '(?<=Title: )(.*)(?=\n 1 4000000119)', pdf_text).group(0).strip()
 
         pdf_writer = PdfWriter()
         pdf_writer.addPage(pdf.getPage(0))
