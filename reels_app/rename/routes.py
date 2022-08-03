@@ -73,6 +73,6 @@ def download_photos():
 
         return send_file(data, mimetype='application/zip',
                          as_attachment=True,
-                         attachment_filename='photos.zip')
+                         download_name='photos.zip')
 
     return render_template('download-photos.html', files=files)

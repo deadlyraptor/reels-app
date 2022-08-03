@@ -73,7 +73,7 @@ def download_pdfs():
 
         return send_file(data, mimetype='application/zip',
                          as_attachment=True,
-                         attachment_filename='pdfs.zip')
+                         download_name='pdfs.zip')
 
     return render_template('download-files.html', files=files,
                            file_type='PDFs', title='Download PDFs')
