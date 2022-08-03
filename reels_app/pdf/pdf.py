@@ -40,6 +40,13 @@ def split(directory):
 
 
 def rename_deluxe(directory):
+    """Batch rename Deluxe invoices.
+
+    The function searches the PDF for the invoice number and film title, then
+    creates a new PDF with the following naming scheme:
+
+    Deluxe Inv {invoice-number} {film-title}.pdf
+    """
 
     for invoice in os.listdir(directory):
         new_path = os.path.join(directory, invoice)
