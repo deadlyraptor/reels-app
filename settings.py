@@ -18,6 +18,7 @@ validate_directory('uploads/spreadsheets')
 validate_directory('uploads/photos')
 validate_directory('uploads/pdfs')
 validate_directory('uploads/invoices')
+validate_directory('uploads/purchase_order')
 
 
 class Config():
@@ -26,3 +27,4 @@ class Config():
     SPREADSHEET_FOLDER = 'uploads/spreadsheets'
     PDF_FOLDER = 'uploads/pdfs'
     INVOICE_FOLDER = 'uploads/invoices'
+    PO_FOLDER = 'uploads/purchase_order'
