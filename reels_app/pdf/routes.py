@@ -12,8 +12,18 @@ from reels_app.pdf.pdf import split, rename_deluxe
 pdf = Blueprint('pdf', __name__)
 
 
-@pdf.route('/upload-pdf', methods=['GET', 'POST'])
-def upload_pdf():
+@pdf.route('/upload-pdf/<pdf_type>', methods=['GET', 'POST'])
+def upload_pdf(pdf_type):
+    """Upload a PDF to the server for manipulation.
+
+    pdf_type
+        This variable determines the flow of the POST request. If it's set to
+        'bor', then the split function is called; if it's set to 'invoice',
+        then the rename_deluxe function is called.
+    """
+
+    pdf_dir = current_app.config['PDF_FOLDER']
+
     if request.method == 'POST':
 
         for uploaded_file in request.files.getlist('file'):
@@ -23,37 +33,20 @@ def upload_pdf():
             else:
                 secured_uploaded_file = secure_filename(uploaded_file.filename)
                 uploaded_file.save(os.path.join(
-                    current_app.config['PDF_FOLDER'],
+                    pdf_dir,
                     secured_uploaded_file))
         flash('PDF successfully uploaded', 'success')
 
-        # split the PDF
-        split(current_app.config['PDF_FOLDER'])
+        if pdf_type == 'BOR':
+            # split the PDF(s)
+            split(pdf_dir)
+        elif pdf_type == 'Invoice':
+            # rename the PDF(s)
+            rename_deluxe(pdf_dir)
+
         return redirect(url_for('pdf.download_pdfs'))
 
-    return render_template('upload-pdf.html', title='Upload BOR')
-
-
-@pdf.route('/upload-invoice', methods=['GET', 'POST'])
-def upload_invoice():
-    if request.method == 'POST':
-
-        for uploaded_file in request.files.getlist('file'):
-            if uploaded_file.filename == '':
-                flash('No invoice selected', 'warning')
-                return redirect(request.url)
-            else:
-                secured_uploaded_file = secure_filename(uploaded_file.filename)
-                uploaded_file.save(os.path.join(
-                    current_app.config['INVOICE_FOLDER'],
-                    secured_uploaded_file))
-        flash('Invoices successfully uploaded.', 'success')
-
-        # rename the PDF
-        rename_deluxe(current_app.config['INVOICE_FOLDER'])
-        return redirect(url_for('pdf.download_pdfs'))
-
-    return render_template('upload-invoice.html', title='Upload invoice')
+    return render_template('upload-pdf.html', title=f'Upload {pdf_type}')
 
 
 @pdf.route('/download-pdfs', methods=['GET', 'POST'])
