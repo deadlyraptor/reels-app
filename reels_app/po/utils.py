@@ -1,3 +1,4 @@
+from operator import itemgetter
 import os
 import re
 
@@ -63,9 +64,13 @@ def create_po(invoices):
 
     cell_num = 31
     count = 0
-    for invoice in invoices:
+    sorted_invoices = sorted(invoices, key=itemgetter('Invoice Number'))
+    for invoice in sorted_invoices:
         ws['B29'] = invoice['Invoice Date']
-        ws[f'D{cell_num + count}'] = f"{invoice['Film']}: Delivery Fee - {invoice['Open Date']} Invoice # {invoice['Invoice Number']}"
+        ws[f'D{cell_num + count}'] = (f"{invoice['Film']}: Delivery Fee - "
+                                      f"{invoice['Open Date']} "
+                                      f"Invoice # {invoice['Invoice Number']}"
+                                      )
         count += 1
 
-    wb.save(filename=(f'{directory}/{purchase_order}/PO Deluxe'))
+    wb.save(filename=(f'{directory}/{purchase_order}'))
