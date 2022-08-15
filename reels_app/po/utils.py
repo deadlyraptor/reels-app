@@ -24,7 +24,6 @@ def parse_deluxe_invoice(directory):
 
         pdf = PdfReader(new_path)
         pdf_text = pdf.getPage(0).extract_text()
-        # print(pdf_text)
 
         # get invoice date
         invoice_date = re.search(
@@ -42,7 +41,7 @@ def parse_deluxe_invoice(directory):
         film_title = re.search(
             '(?<=Title: )(.*)(?=\n 1 4000000119)', pdf_text
         ).group(0).strip()
-        invoice_data['Film'] = film_title
+        invoice_data['Film'] = film_title.upper()
 
         # get open date
         open_date = re.search(
@@ -51,7 +50,6 @@ def parse_deluxe_invoice(directory):
         invoice_data['Open Date'] = open_date
 
         invoices.append(invoice_data)
-        # print(invoice_data)
     return invoices
 
 
@@ -70,4 +68,4 @@ def create_po(invoices):
         ws[f'D{cell_num + count}'] = f"{invoice['Film']}: Delivery Fee - {invoice['Open Date']} Invoice # {invoice['Invoice Number']}"
         count += 1
 
-    wb.save(filename=(f'{directory}/{purchase_order}'))
+    wb.save(filename=(f'{directory}/{purchase_order}/PO Deluxe'))

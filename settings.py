@@ -23,8 +23,8 @@ validate_directory('uploads/purchase_order')
 
 class Config():
     SECRET_KEY = os.getenv('SECRET_KEY')
-    PHOTOS_FOLDER = 'uploads/photos'
-    SPREADSHEET_FOLDER = 'uploads/spreadsheets'
-    PDF_FOLDER = 'uploads/pdfs'
     INVOICE_FOLDER = 'uploads/invoices'
+    PHOTOS_FOLDER = 'uploads/photos'
+    PDF_FOLDER = 'uploads/pdfs'
     PO_FOLDER = 'uploads/purchase_order'
+    SPREADSHEET_FOLDER = 'uploads/spreadsheets'

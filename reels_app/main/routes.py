@@ -14,10 +14,10 @@ def index():
 
         delete_files('csvs')
         delete_files('pdfs')
-        delete_files('uploads/photos')
-        delete_files('uploads/spreadsheets')
-        delete_files('uploads/pdfs')
         delete_files('uploads/invoices')
+        delete_files('uploads/photos')
+        delete_files('uploads/pdfs')
+        delete_files('uploads/spreadsheets')
 
         flash('Files successfully deleted', 'success')
         return redirect(url_for('main.index'))
