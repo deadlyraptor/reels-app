@@ -40,7 +40,7 @@ def parse_deluxe_invoice(directory):
 
         # get film title
         film_title = re.search(
-            '(?<=Title: )(.*)(?=\n 1 4000000119)', pdf_text
+            '(?<=Title: )(.*)', pdf_text
         ).group(0).strip()
         invoice_data['Film'] = film_title.upper()
 
