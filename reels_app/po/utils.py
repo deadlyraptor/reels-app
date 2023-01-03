@@ -40,7 +40,7 @@ def parse_deluxe_invoice(directory):
 
         # get film title
         film_title = re.search(
-            '(?<=Title: )(.*)(?=\n 1 4000000119)', pdf_text
+            '(?<=Title: )(.*)(?=\n 1)', pdf_text
         ).group(0).strip()
         invoice_data['Film'] = film_title.upper()
 
@@ -49,6 +49,11 @@ def parse_deluxe_invoice(directory):
             '(?<=OPEN DATE: )(.*)(?=Pay Online)(?s)', pdf_text
         ).group(0).strip()
         invoice_data['Open Date'] = open_date
+
+        # get fee
+        fee = re.search('(?<=TAX AMOUNT:)(.*)(?=  GRAND TOTAL:)(?s)', pdf_text
+                        ).group(0).strip()
+        invoice_data['Fee'] = float(fee[1:])
 
         invoices.append(invoice_data)
     return invoices
@@ -71,6 +76,8 @@ def create_po(invoices):
                                       f"{invoice['Open Date']} "
                                       f"Invoice # {invoice['Invoice Number']}"
                                       )
+        ws[f'V{cell_num + count}'] = invoice['Fee']
+
         count += 1
 
     wb.save(filename=(f'{directory}/{purchase_order}'))
