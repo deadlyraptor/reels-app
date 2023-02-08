@@ -14,6 +14,7 @@ def validate_directory(directory):
 validate_directory('csvs')
 validate_directory('pdfs')
 validate_directory('uploads')
+validate_directory('uploads/credits')
 validate_directory('uploads/spreadsheets')
 validate_directory('uploads/photos')
 validate_directory('uploads/pdfs')
@@ -23,8 +24,10 @@ validate_directory('uploads/purchase_order')
 
 class Config():
     SECRET_KEY = os.getenv('SECRET_KEY')
+    CREDITS_FOLDER = 'uploads/credits'
     INVOICE_FOLDER = 'uploads/invoices'
     PHOTOS_FOLDER = 'uploads/photos'
     PDF_FOLDER = 'uploads/pdfs'
     PO_FOLDER = 'uploads/purchase_order'
     SPREADSHEET_FOLDER = 'uploads/spreadsheets'
+    TMDB_API = os.getenv('TMDB_API')
