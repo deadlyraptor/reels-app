@@ -34,6 +34,7 @@ def upload_spreadsheet():
         try:
             spready(current_app.config['SPREADSHEET_FOLDER'])
         except XLRDError:
+            # TODO this should throw an openpyxl InvalidFileException error
             flash('Unsupported file type. Spreadsheet must be .xls, not xlsx.',
                   'warning')
             return redirect(url_for('main.index'))
