@@ -13,14 +13,6 @@ from reels_app.po.utils import parse_deluxe_invoice, create_po
 po = Blueprint('po', __name__)
 
 
-"""
-1. Upload the template -- OK
-2. Upload the invoices -- OK
-3. Create the PO -- in progess
-4. Download the PO -- TODO
-"""
-
-
 @po.route('/upload-po-template', methods=['GET', 'POST'])
 def upload_po_template():
     """Upload a PO template to the server."""

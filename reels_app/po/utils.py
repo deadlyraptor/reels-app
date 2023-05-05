@@ -16,7 +16,6 @@ def parse_deluxe_invoice(directory):
     - Film title
     - Delivery date
     """
-
     invoices = []
     for invoice in os.listdir(directory):
         invoice_data = {}
@@ -60,11 +59,12 @@ def parse_deluxe_invoice(directory):
 
 
 def create_po(invoices):
+    """Create the PO."""
     # Cell D31 - {film title}: Delivery Fee - {date} Invoice # {invoice number}
     directory = current_app.config['PO_FOLDER']
     purchase_order = os.listdir(directory)[0]
 
-    wb = load_workbook(filename=(f'{directory}/{purchase_order}'))
+    wb = load_workbook(filename=f'{directory}/{purchase_order}')
     ws = wb['PO Form']
 
     cell_num = 31
@@ -80,4 +80,4 @@ def create_po(invoices):
 
         count += 1
 
-    wb.save(filename=(f'{directory}/{purchase_order}'))
+    wb.save(filename=f'{directory}/{purchase_order}')

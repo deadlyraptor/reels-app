@@ -8,9 +8,10 @@ from flask import (Blueprint, current_app, flash,
 from flask.helpers import url_for
 from werkzeug.utils import secure_filename
 
-from xlrd import XLRDError
+from openpyxl.utils.exceptions import InvalidFileException
 
-from .spready import spready
+
+from reels_app.spreadchimp.spready import spready
 
 spreadchimp = Blueprint('spreadchimp', __name__)
 
@@ -33,11 +34,10 @@ def upload_spreadsheet():
         # creates the CSV files
         try:
             spready(current_app.config['SPREADSHEET_FOLDER'])
-        except XLRDError:
-            # TODO this should throw an openpyxl InvalidFileException error
-            flash('Unsupported file type. Spreadsheet must be .xls, not xlsx.',
+        except InvalidFileException:
+            flash('Unsupported file type. Spreadsheet must be .xlsx, not xls.',
                   'warning')
-            return redirect(url_for('main.index'))
+            return redirect(url_for('spreadchimp.upload_spreadsheet'))
 
         return redirect(url_for('spreadchimp.download_csvs'))
 

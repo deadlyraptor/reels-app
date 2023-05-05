@@ -6,11 +6,11 @@ from openpyxl import load_workbook
 
 
 def spready(directory):
-
+    """Compile the different series into a list."""
     directory = current_app.config['SPREADSHEET_FOLDER']
     manifest = os.listdir(directory)[0]
 
-    wb = load_workbook(filename=(f'{directory}/{manifest}'))
+    wb = load_workbook(filename=f'{directory}/{manifest}')
     ws = wb.active
 
     last_row = ws.max_row
@@ -25,9 +25,7 @@ def spready(directory):
             series.append(series_title)
 
     def prep_contacts(series):
-        '''
-        Collects all contacts that  match the given series into a list that
-        will be used to write the actual spreadsheet.
+        """Compile contacts into a list.
 
         Arguments:
             series = The series the customer attended. Note that the original
@@ -36,8 +34,7 @@ def spready(directory):
 
         Returns:
             contacts = The list of all contacts for a given series.
-        '''
-
+        """
         contacts = []
         for row in range(first_row, last_row):
             contact = []
