@@ -5,20 +5,20 @@ load_dotenv()
 
 
 def validate_directory(directory):
+    """Check if directory exists, if not create it."""
     if os.path.exists(directory):
         pass
     else:
         os.mkdir(directory)
 
 
-validate_directory('csvs')
-validate_directory('pdfs')
-validate_directory('uploads')
-validate_directory('uploads/spreadsheets')
-validate_directory('uploads/photos')
-validate_directory('uploads/pdfs')
-validate_directory('uploads/invoices')
-validate_directory('uploads/purchase_order')
+# The directories to be created if they don't exist.
+directories = ['csvs', 'pdfs', 'uploads', 'uploads/spreadsheets',
+               'uploads/photos', 'uploads/pdfs', 'uploads/invoices',
+               'uploads/purchase_order']
+
+for directory in directories:
+    validate_directory(directory)
 
 
 class Config():
