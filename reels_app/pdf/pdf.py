@@ -5,6 +5,7 @@ from PyPDF2 import PdfReader, PdfWriter
 
 
 def split(directory):
+    """Split a PDF into multiple PDFs."""
     item = os.listdir(directory)[0]  # get the PDF filename
 
     # join the directory & PDF file name
@@ -47,7 +48,6 @@ def rename_deluxe(directory):
 
     Deluxe Inv {invoice-number} {film-title}.pdf
     """
-
     for invoice in os.listdir(directory):
         new_path = os.path.join(directory, invoice)
 

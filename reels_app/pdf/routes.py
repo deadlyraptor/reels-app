@@ -18,10 +18,9 @@ def upload_pdf(pdf_type):
 
     pdf_type
         This variable determines the flow of the POST request. If it's set to
-        'bor', then the split function is called; if it's set to 'invoice',
-        then the rename_deluxe function is called.
+        'bor', then split() is called; if it's set to 'invoice',
+        then rename_deluxe() is called.
     """
-
     pdf_dir = current_app.config['PDF_FOLDER']
 
     if request.method == 'POST':
@@ -37,7 +36,7 @@ def upload_pdf(pdf_type):
                     secured_uploaded_file))
         flash('PDF successfully uploaded', 'success')
 
-        if pdf_type == 'BOR':
+        if pdf_type == 'Box office report':
             # split the PDF(s)
             split(pdf_dir)
         elif pdf_type == 'Invoice':
