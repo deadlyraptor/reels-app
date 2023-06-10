@@ -23,7 +23,7 @@ def parse_deluxe_invoice(directory):
         new_path = os.path.join(directory, invoice)
 
         pdf = PdfReader(new_path)
-        pdf_text = pdf.getPage(0).extract_text()
+        pdf_text = pdf.pages[0].extract_text()
 
         # get invoice date
         invoice_date = re.search(
