@@ -12,11 +12,13 @@ def split(directory):
     new_path = os.path.join(directory, item)
 
     pdf = PdfReader(new_path)
+    print(len(pdf.pages))
 
-    for page in range(len(pdf.pages)):
+    # for page in range(len(pdf.pages)):
+    for page, unused in enumerate(pdf.pages):
 
-        # search for the film title
         pdf_text = pdf.pages[page].extract_text()
+
         # search for the film title, located between the strings Film: and
         # DayTicket; some pages push DayTicket to a new line so the (?s) inline
         # flag ensures that those get captured as well
