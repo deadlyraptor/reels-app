@@ -36,10 +36,10 @@ def upload_pdf(pdf_type):
                     secured_uploaded_file))
         flash('PDF successfully uploaded', 'success')
 
-        if pdf_type == 'Box office report':
+        if pdf_type == 'bor':
             # split the PDF(s)
             split(pdf_dir)
-        elif pdf_type == 'Invoice':
+        elif pdf_type == 'deluxe':
             # rename the PDF(s)
             rename_deluxe(pdf_dir)
 
@@ -50,6 +50,7 @@ def upload_pdf(pdf_type):
 
 @pdf.route('/download-pdfs', methods=['GET', 'POST'])
 def download_pdfs():
+    """Download the PDFs from the server as a zip file."""
     files = os.listdir('pdfs')
 
     base_path = pathlib.Path('pdfs')

@@ -13,10 +13,10 @@ def split(directory):
 
     pdf = PdfReader(new_path)
 
-    for page in range(pdf.getNumPages()):
+    for page in range(len(pdf.pages)):
 
         # search for the film title
-        pdf_text = pdf.getPage(page).extract_text()
+        pdf_text = pdf.pages[page].extract_text()
         # search for the film title, located between the strings Film: and
         # DayTicket; some pages push DayTicket to a new line so the (?s) inline
         # flag ensures that those get captured as well
@@ -33,7 +33,7 @@ def split(directory):
 
         # prepare the class that will write to a new PDF
         pdf_writer = PdfWriter()
-        pdf_writer.addPage(pdf.getPage(page))
+        pdf_writer.add_page(pdf.pages[page])
 
         # write to a new PDF
         with open(f'pdfs/{name_of_split}-{page}.pdf', mode='wb') as output_pdf:
@@ -52,19 +52,21 @@ def rename_deluxe(directory):
         new_path = os.path.join(directory, invoice)
 
         pdf = PdfReader(new_path)
-        pdf_text = pdf.getPage(0).extract_text()
+        pdf_text = pdf.pages[0].extract_text()
 
         # get invoice number and strip new lines
         invoice_number = re.search(
-            '(?<=Invoice Date:)(.*)(?=Customer Account No:)(?s)', pdf_text).group(0).strip()
+            '(?<=Invoice Date:)(.*)(?=Customer Account No:)(?s)',
+            pdf_text).group(0).strip()
 
         # get film title and strip new lines
         film_title = re.search(
             '(?<=Title: )(.*)', pdf_text).group(0).strip().upper()
 
         pdf_writer = PdfWriter()
-        pdf_writer.addPage(pdf.getPage(0))
+        pdf_writer.add_page(pdf.pages[0])
 
         # write to a new PDF
-        with open(f'pdfs/Deluxe Inv {invoice_number} {film_title}.pdf', mode='wb') as output_pdf:
+        with open(f'pdfs/Deluxe Inv {invoice_number} {film_title}.pdf',
+                  mode='wb') as output_pdf:
             pdf_writer.write(output_pdf)
