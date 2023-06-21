@@ -18,8 +18,8 @@ def upload_pdf(pdf_type):
 
     pdf_type
         This variable determines the flow of the POST request. If it's set to
-        'bor', then split() is called; if it's set to 'invoice',
-        then rename_deluxe() is called.
+        'box-office-report', then split() is called; if it's set to
+        'deluxe-invoice', then rename_deluxe() is called.
     """
     pdf_dir = current_app.config['PDF_FOLDER']
 
@@ -34,6 +34,9 @@ def upload_pdf(pdf_type):
                 uploaded_file.save(os.path.join(
                     pdf_dir,
                     secured_uploaded_file))
+        # flash no longer works after redirecting directly from
+        # the Dropzone
+        # TODO: grab message from Dropzone to flash a success message
         flash('PDF successfully uploaded', 'success')
 
         if pdf_type == 'box-office-report':
@@ -45,7 +48,17 @@ def upload_pdf(pdf_type):
 
         return redirect(url_for('pdf.download_pdfs'))
 
-    return render_template('upload-pdf.html', title=f'Upload {pdf_type}')
+    if pdf_type == 'box-office-report':
+        # This if statement ensures the template is rendered correctly,
+        # depending on whether a Deluxe invoice or box office report is
+        # uploaded.
+        return render_template('upload-pdf.html',
+                               pdf_type='box-office-report',
+                               title='Upload Box Office Report')
+    elif pdf_type == 'deluxe-invoice':
+        return render_template('upload-pdf.html',
+                               pdf_type='deluxe-invoice',
+                               title='Upload Deluxe Invoice')
 
 
 @pdf.route('/download-pdfs', methods=['GET', 'POST'])
