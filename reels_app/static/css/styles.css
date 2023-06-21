@@ -1,14 +1,8 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+body {
+    font-family: 'Lato', sans-serif;
 }
 
-body {
-    margin: 2em auto;
-    max-width: 800px;
-    padding: 1em;
-    line-height: 1.4;
-    text-align: justify;
-    font-family: 'Lato', sans-serif;
+.dropzone-message {
+    color: #0087F7;
+    font-weight: 700;
 }

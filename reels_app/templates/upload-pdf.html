@@ -10,6 +10,8 @@
 {% endblock content %}
 
 {% block scripts %}
+{{ dropzone.style('border: 2px dashed #0087F7; margin: 2%; min-height: 200px;') }}
 {{ dropzone.load_js() }}
-{{ dropzone.config(default_message='Drop Deluxe invoices here to upload', redirect_url=url_for('pdf.download_pdfs'))}}
+{{ dropzone.config(redirect_url=url_for('pdf.download_pdfs'),
+default_message='<span class="dropzone-message">Drag and drop, or browse your files</span>')}}
 {% endblock scripts %}
