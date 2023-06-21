@@ -1,5 +1,7 @@
 from flask import Flask
 
+from flask_dropzone import Dropzone
+
 from reels_app.main.routes import main
 from reels_app.rename.routes import rename
 from reels_app.pdf.routes import pdf
@@ -8,12 +10,15 @@ from reels_app.po.routes import po
 
 from settings import Config
 
+dropzone = Dropzone()
+
 
 def create_app(config_class=Config):
     app = Flask(__name__)
     app.config.from_object(config_class)
 
     register_blueprints(app)
+    dropzone.init_app(app)
 
     return app
 

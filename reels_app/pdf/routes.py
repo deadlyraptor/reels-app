@@ -36,10 +36,10 @@ def upload_pdf(pdf_type):
                     secured_uploaded_file))
         flash('PDF successfully uploaded', 'success')
 
-        if pdf_type == 'bor':
+        if pdf_type == 'box-office-report':
             # split the PDF(s)
             split(pdf_dir)
-        elif pdf_type == 'deluxe':
+        elif pdf_type == 'deluxe-invoice':
             # rename the PDF(s)
             rename_deluxe(pdf_dir)
 

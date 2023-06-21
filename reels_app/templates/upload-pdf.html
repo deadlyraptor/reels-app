@@ -3,13 +3,13 @@
 {% block content %}
 <h1>{{ title }}</h1>
 
-<form method="POST" action="" enctype="multipart/form-data">
-    <div class="form-group">
-        <p><input type="file" name="file" multiple accept=".pdf" class="form-control-file"></p>
-        <p><input type="submit" value="Upload PDF(s)" class="btn btn-primary"></p>
-    </div>
-</form>
+{{ dropzone.create(action=url_for('pdf.upload_pdf', pdf_type='deluxe-invoice')) }}
 
 <hr>
 <p><a href="{{ url_for('main.index') }}">Go back</a></p>
 {% endblock content %}
+
+{% block scripts %}
+{{ dropzone.load_js() }}
+{{ dropzone.config(default_message='Drop Deluxe invoices here to upload', redirect_url=url_for('pdf.download_pdfs'))}}
+{% endblock scripts %}
