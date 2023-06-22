@@ -5,16 +5,14 @@ from PyPDF2 import PdfReader, PdfWriter
 
 
 def split(directory):
-    """Split a PDF into multiple PDFs."""
+    """Split the DistrubtorbyFilmandType PDF into multiple PDFs per film."""
     item = os.listdir(directory)[0]  # get the PDF filename
 
     # join the directory & PDF file name
     new_path = os.path.join(directory, item)
 
     pdf = PdfReader(new_path)
-    print(len(pdf.pages))
 
-    # for page in range(len(pdf.pages)):
     for page, unused in enumerate(pdf.pages):
 
         pdf_text = pdf.pages[page].extract_text()
@@ -26,19 +24,19 @@ def split(directory):
 
         if film_title is None:
             # provides a default in case the regex returns None
-            name_of_split = f'box-office-page-{page}'
+            new_film_title = f'box-office-page-{page}'
         else:
-            # remove quotation mark if used, such as in NTL
-            # remove \n characters if found
-            name_of_split = film_title.group(
-                1).replace('"', '').replace('\n', '')
+            # replace any illegal characters with a space otherwise function
+            # will error due to filename issues
+            new_film_title = re.sub(
+                '\"|\:|\/|\\|\<|\>|\||\?|\*|\n', ' ', film_title.group(1))
 
         # prepare the class that will write to a new PDF
         pdf_writer = PdfWriter()
         pdf_writer.add_page(pdf.pages[page])
 
         # write to a new PDF
-        with open(f'pdfs/{name_of_split}-{page}.pdf', mode='wb') as output_pdf:
+        with open(f'pdfs/{new_film_title}-{page}.pdf', mode='wb') as output_pdf:
             pdf_writer.write(output_pdf)
 
 
