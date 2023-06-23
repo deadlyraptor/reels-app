@@ -59,14 +59,18 @@ def rename_deluxe(directory):
             '(?<=Invoice Date:)(.*)(?=Customer Account No:)(?s)',
             pdf_text).group(0).strip()
 
-        # get film title and strip new lines
+        # replace any illegal characters in the film title with a space
+        # otherwise function will error due to filename issues
         film_title = re.search(
             '(?<=Title: )(.*)', pdf_text).group(0).strip().upper()
+        film_title_sanitized = re.sub(
+            '\"|\:|\/|\\|\<|\>|\||\?|\*|\n', ' ', film_title)
 
         pdf_writer = PdfWriter()
         pdf_writer.add_page(pdf.pages[0])
 
         # write to a new PDF
-        with open(f'pdfs/Deluxe Inv {invoice_number} {film_title}.pdf',
+        with open((f'pdfs/Deluxe Inv {invoice_number} '
+                  f'{film_title_sanitized}.pdf'),
                   mode='wb') as output_pdf:
             pdf_writer.write(output_pdf)
