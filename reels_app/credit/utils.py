@@ -1,4 +1,5 @@
 import os
+import inspect
 
 from flask import current_app
 from openpyxl import load_workbook
@@ -9,7 +10,41 @@ tmdb.API_KEY = '9dc3cebfcea4371070e9193ab068fd52'
 tmdb.REQUESTS_TIMEOUT = 5
 
 
-def build_film_dict(directory):
+class Film:
+    """
+    DIR ####; SCR ####; PROD ####. U.S., 1984, color, 160 min. Lang. RATED PG
+    """
+
+    def __init__(self, title, imdb_id):
+        self.title = title
+        self.imdb_id = imdb_id
+        self.tmdb_id = None  # done
+        self.response = None
+        self.directors = []
+        self.writers = []
+        self.producers = []
+        self.countries = []
+        self.release_date = None
+        self.runtime = None  # done
+        self.rating = None
+
+    def get_tmdb_id(self):
+        response = tmdb.Find(self.imdb_id).info(external_source='imdb_id')
+        self.tmdb_id = response['movie_results'][0]['id']
+
+    # def get_response(self):
+    #     self.response = tmdb.Find(self.tmdb_id).info()
+
+    def get_release_date(self):
+        response = tmdb.Movies(self.tmdb_id).info()
+        self.release_date = response['release_date'][:4]
+
+    def get_runtime(self):
+        response = tmdb.Movies(self.tmdb_id).info()
+        self.runtime = response['runtime']
+
+
+def build_film_list(directory):
     """Parse the uploaded workbook and build a dictionary out of the data."""
 
     directory = current_app.config['CREDITS_FOLDER']
@@ -24,19 +59,20 @@ def build_film_dict(directory):
     films = []
 
     for row in range(first_row, last_row):
-        film = dict(film_title=ws.cell(row, 1).value,
+        film = Film(title=ws.cell(row, 1).value,
                     imdb_id=ws.cell(row, 2).value)
         films.append(film)
 
-
-def get_movie_id(query):
-    """Get the movie's TMDB id."""
-    search = tmdb.Search()
-    response = search.movie(query=query)
-    if search.results:
-        return search.results[0]['id']
-    else:
-        return
+    for film in films:
+        # Each of the class's attributes will be populated in this loop
+        film.get_tmdb_id()
+        film.get_release_date()
+        film.get_runtime()
+        print(f'Title: {film.title}')
+        print(f'TMDB ID: {film.tmdb_id}')
+        print(f'Release Date: {film.release_date}')
+        print(f'Runtime: {film.runtime}')
+        print('-------')
 
 
 def get_year(movie_id):
