@@ -5,15 +5,15 @@ from flask import (Blueprint, current_app, flash, redirect, render_template,
 from werkzeug.utils import secure_filename
 import tmdbsimple as tmdb
 
-from reels_app.credit.utils import build_film_dict
+from reels_app.credit.utils import build_film_list
 
 credit = Blueprint('credit', __name__)
 
 """
 [X] 1. Format a workbook with the title of the film and its IMDB ID
-[] 2. Upload the workbook to Reels
-[] 3. Parse the workbook, grab the IMDB ID (dict)
-[] 4. Query TMDB using the Find method
+[X] 2. Upload the workbook to Reels
+[X] 3. Parse the workbook, grab the IMDB ID (dict)
+[X] 4. Query TMDB using the Find method
 [] 5. Append film credits to the film dict
 [] 6. Write the contents of the dict into a text file following AFI style
 """
@@ -36,7 +36,7 @@ def upload_credits_list():
                 ))
         flash('Credit list successfully uploaded', 'success')
 
-        build_film_dict(current_app.config['CREDITS_FOLDER'])
+        build_film_list(current_app.config['CREDITS_FOLDER'])
 
         return redirect(url_for('credit.upload_credits_list')
                         )
