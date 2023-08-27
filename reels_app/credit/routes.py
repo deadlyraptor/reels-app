@@ -7,15 +7,14 @@ from flask import (Blueprint, current_app, flash, redirect, render_template,
                    request, send_file, url_for)
 from werkzeug.utils import secure_filename
 
-from reels_app.credit.utils import build_film_list
+from reels_app.credit.utils import get_credits
 
 credit = Blueprint('credit', __name__)
 
 
 @credit.route('/upload-credits-list', methods=['GET', 'POST'])
 def upload_credits_list():
-    """Upload an .xlsx file with a list of films to get credits for."""
-
+    """Upload an .xlsx file with a list of films and their IMDB IDs."""
     if request.method == 'POST':
         for uploaded_file in request.files.getlist('file'):
             if uploaded_file.filename == '':
@@ -29,7 +28,7 @@ def upload_credits_list():
                 ))
         flash('Credit list successfully uploaded', 'success')
 
-        build_film_list(current_app.config['CREDITS_FOLDER'])
+        get_credits(current_app.config['CREDITS_FOLDER'])
 
         return redirect(url_for('credit.download_credits'))
 
@@ -38,6 +37,7 @@ def upload_credits_list():
 
 @credit.route('/download-credits', methods=['GET', 'POST'])
 def download_credits():
+    """Download a .docx file with film credits."""
     files = os.listdir(current_app.config['CREDITS_FOLDER'])
 
     base_path = pathlib.Path(current_app.config['CREDITS_FOLDER'])

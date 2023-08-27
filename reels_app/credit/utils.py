@@ -66,7 +66,6 @@ class Film:
     def get_crew(self):
         """Return the director(s), screenwriter(s), and producer(s) of the
         queried film."""
-
         crew = tmdb.Movies(self.tmdb_id).credits()['crew']
 
         for crew_member in crew:
@@ -90,9 +89,8 @@ class Film:
                     self.rating = f'RATED {country["certification"]}'
 
 
-def build_film_list(directory):
-    """Parse the uploaded workbook and build a dictionary out of the data."""
-
+def get_credits(directory):
+    """Loop over the uploaded workbook and get the credits for each film."""
     directory = current_app.config['CREDITS_FOLDER']
     manifest = os.listdir(directory)[0]
 
