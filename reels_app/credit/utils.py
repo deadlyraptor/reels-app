@@ -1,5 +1,4 @@
 import os
-import inspect
 
 from flask import current_app
 from openpyxl import load_workbook
@@ -47,7 +46,10 @@ class Film:
         production_countries = self.movie_info['production_countries']
         countries = []
         for country in production_countries:
-            countries.append(country['name'])
+            if country['iso_3166_1'] == 'US':
+                countries.append('U.S.')
+            else:
+                countries.append(country['name'])
         self.countries = countries
 
     def get_languages(self):
@@ -73,7 +75,10 @@ class Film:
         for crew_member in crew:
             if crew_member['job'] == 'Director':
                 self.directors.append(crew_member['name'])
-            if crew_member['job'] == 'Screenplay':
+            if (
+                crew_member['job'] == 'Screenplay' or
+                crew_member['job'] == 'Writer'
+            ):
                 self.writers.append(crew_member['name'])
             if crew_member['job'] == 'Producer':
                 self.producers.append(crew_member['name'])
@@ -97,7 +102,9 @@ def build_film_list(directory):
     wb = load_workbook(filename=f'{directory}/{manifest}')
     ws = wb.active
 
-    last_row = ws.max_row
+    # Python's range functiion excludes the second parameter so we add 1 so it
+    # can be included, otherwise it will skip whatever film isi n the last row
+    last_row = ws.max_row + 1
     first_row = 2
 
     films = []
