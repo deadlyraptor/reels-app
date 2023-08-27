@@ -86,11 +86,11 @@ class Film:
     def get_rating(self):
         response = tmdb.Movies(self.tmdb_id).releases()
         for country in response['countries']:
-            if (
-                    country['iso_3166_1'] == 'US' and
-                    country['certification'] is not None
-            ):
-                self.rating = country['certification']
+            if country['iso_3166_1'] == 'US':
+                if country['certification'] == '':
+                    self.rating = 'NOT RATED'
+                else:
+                    self.rating = f'RATED {country["certification"]}'
 
 
 def build_film_list(directory):
@@ -144,16 +144,16 @@ def build_film_list(directory):
         if (len(film.languages) == 1) and (film.languages[0] == 'English'):
             language = ''
         else:
-            language = f'In {"/".join(film.languages)} with English subtitles.'
+            language = f'In {"/".join(film.languages)} with English subtitles. '
 
         paragraph = (
             f'DIR {", ".join(film.directors)}; '
             f'SCR {", ".join(film.writers)}; '
-            f'PROD {", ".join(film.producers)}; '
+            f'PROD {", ".join(film.producers)}. '
             f'{"/".join(film.countries)}, '
             f'{film.release_date}, color/b&w, {film.runtime} min. '
             f'{language}'
-            f' RATED {film.rating}'
+            f'{film.rating}'
         )
 
         document.add_paragraph(paragraph)
