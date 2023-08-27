@@ -16,19 +16,19 @@ class Film:
     """
 
     def __init__(self, title, imdb_id):
-        self.title = title
-        self.imdb_id = imdb_id
+        self.title = title  # done
+        self.imdb_id = imdb_id  # done
         self.tmdb_id = None  # done
         self.movie_info = None  # done
-        self.directors = []
-        self.writers = []
-        self.producers = []
+        self.directors = []  # done
+        self.writers = []  # done
+        self.producers = []  # done
         self.countries = []  # done
         self.languages = []  # done
         self.release_date = None  # done
         self.runtime = None  # done
         self.genres = []  # done
-        self.rating = None
+        self.rating = None  # done
 
     def get_tmdb_id(self):
         response = tmdb.Find(self.imdb_id).info(external_source='imdb_id')
@@ -78,6 +78,15 @@ class Film:
             if crew_member['job'] == 'Producer':
                 self.producers.append(crew_member['name'])
 
+    def get_rating(self):
+        response = tmdb.Movies(self.tmdb_id).releases()
+        for country in response['countries']:
+            if (
+                    country['iso_3166_1'] == 'US' and
+                    country['certification'] is not None
+            ):
+                self.rating = country['certification']
+
 
 def build_film_list(directory):
     """Parse the uploaded workbook and build a dictionary out of the data."""
@@ -108,6 +117,7 @@ def build_film_list(directory):
         film.get_languages()
         film.get_genres()
         film.get_crew()
+        film.get_rating()
         print(f'Title: {film.title}')
         print(f'TMDB ID: {film.tmdb_id}')
         print(f'Release Date: {film.release_date}')
@@ -118,4 +128,5 @@ def build_film_list(directory):
         print(f'Directors: {film.directors}')
         print(f'Writers: {film.writers}')
         print(f'Producers: {film.producers}')
+        print(f'Rating: {film.rating}')
         print('-------')
