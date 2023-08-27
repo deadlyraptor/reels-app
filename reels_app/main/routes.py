@@ -14,6 +14,7 @@ def index():
 
         delete_files('csvs')
         delete_files('pdfs')
+        delete_files('uploads/credits')
         delete_files('uploads/invoices')
         delete_files('uploads/photos')
         delete_files('uploads/pdfs')

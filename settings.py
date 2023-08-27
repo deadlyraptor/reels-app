@@ -13,9 +13,9 @@ def validate_directory(directory):
 
 
 # The directories to be created if they don't exist.
-directories = ['csvs', 'pdfs', 'uploads', 'uploads/spreadsheets',
-               'uploads/photos', 'uploads/pdfs', 'uploads/invoices',
-               'uploads/purchase_order']
+directories = ['csvs', 'pdfs', 'uploads', 'uploads/credits/',
+               'uploads/spreadsheets', 'uploads/photos', 'uploads/pdfs',
+               'uploads/invoices', 'uploads/purchase_order']
 
 for directory in directories:
     validate_directory(directory)
@@ -23,8 +23,10 @@ for directory in directories:
 
 class Config():
     SECRET_KEY = os.getenv('SECRET_KEY')
+    CREDITS_FOLDER = 'uploads/credits'
     INVOICE_FOLDER = 'uploads/invoices'
     PHOTOS_FOLDER = 'uploads/photos'
     PDF_FOLDER = 'uploads/pdfs'
     PO_FOLDER = 'uploads/purchase_order'
     SPREADSHEET_FOLDER = 'uploads/spreadsheets'
+    TMDB_API = os.getenv('TMDB_API')
