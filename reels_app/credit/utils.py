@@ -5,8 +5,7 @@ from flask import current_app
 from openpyxl import load_workbook
 import tmdbsimple as tmdb
 
-# tmdb.API_KEY = os.getenv('TMDB_API')
-tmdb.API_KEY = '9dc3cebfcea4371070e9193ab068fd52'
+tmdb.API_KEY = os.getenv('TMDB_API')
 tmdb.REQUESTS_TIMEOUT = 5
 
 
