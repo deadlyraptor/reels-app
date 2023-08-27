@@ -27,7 +27,7 @@ class Film:
         self.languages = []  # done
         self.release_date = None  # done
         self.runtime = None  # done
-        self.genres = []
+        self.genres = []  # done
         self.rating = None
 
     def get_tmdb_id(self):
@@ -42,6 +42,13 @@ class Film:
 
     def get_runtime(self):
         self.runtime = self.response['runtime']
+
+    def get_countries(self):
+        production_countries = self.response['production_countries']
+        countries = []
+        for country in production_countries:
+            countries.append(country['name'])
+        self.countries = countries
 
     def get_languages(self):
         spoken_languages = self.response['spoken_languages']
@@ -83,12 +90,14 @@ def build_film_list(directory):
         film.get_response()
         film.get_release_date()
         film.get_runtime()
+        film.get_countries()
         film.get_languages()
         film.get_genres()
         print(f'Title: {film.title}')
         print(f'TMDB ID: {film.tmdb_id}')
         print(f'Release Date: {film.release_date}')
         print(f'Runtime: {film.runtime}')
+        print(f'Countries: {film.countries}')
         print(f'Languages: {film.languages}')
         print(f'Genres: {film.genres}')
         print('-------')
