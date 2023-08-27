@@ -19,39 +19,43 @@ class Film:
         self.title = title
         self.imdb_id = imdb_id
         self.tmdb_id = None  # done
-        self.response = None
+        self.response = None  # done
         self.directors = []
         self.writers = []
         self.producers = []
         self.countries = []
-        self.languages = []
+        self.languages = []  # done
         self.release_date = None  # done
         self.runtime = None  # done
+        self.genres = []
         self.rating = None
 
     def get_tmdb_id(self):
         response = tmdb.Find(self.imdb_id).info(external_source='imdb_id')
         self.tmdb_id = response['movie_results'][0]['id']
 
-    # def get_response(self):
-    #     self.response = tmdb.Find(self.tmdb_id).info()
+    def get_response(self):
+        self.response = tmdb.Movies(self.tmdb_id).info()
 
     def get_release_date(self):
-        response = tmdb.Movies(self.tmdb_id).info()
-        self.release_date = response['release_date'][:4]
+        self.release_date = self.response['release_date'][:4]
 
     def get_runtime(self):
-        response = tmdb.Movies(self.tmdb_id).info()
-        self.runtime = response['runtime']
+        self.runtime = self.response['runtime']
 
     def get_languages(self):
-        response = tmdb.Movies(self.tmdb_id).info()
-        spoken_languages = response['spoken_languages']
+        spoken_languages = self.response['spoken_languages']
         languages = []
         for language in spoken_languages:
             languages.append(language['english_name'])
-
         self.languages = languages
+
+    def get_genres(self):
+        tmdb_genres = self.response['genres']
+        genres = []
+        for genre in tmdb_genres:
+            genres.append(genre['name'])
+        self.genres = genres
 
 
 def build_film_list(directory):
@@ -76,14 +80,17 @@ def build_film_list(directory):
     for film in films:
         # Each of the class's attributes will be populated in this loop
         film.get_tmdb_id()
+        film.get_response()
         film.get_release_date()
         film.get_runtime()
         film.get_languages()
+        film.get_genres()
         print(f'Title: {film.title}')
         print(f'TMDB ID: {film.tmdb_id}')
         print(f'Release Date: {film.release_date}')
         print(f'Runtime: {film.runtime}')
         print(f'Languages: {film.languages}')
+        print(f'Genres: {film.genres}')
         print('-------')
 
 
