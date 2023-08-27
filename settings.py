@@ -29,4 +29,3 @@ class Config():
     PDF_FOLDER = 'uploads/pdfs'
     PO_FOLDER = 'uploads/purchase_order'
     SPREADSHEET_FOLDER = 'uploads/spreadsheets'
-    TMDB_API = os.getenv('TMDB_API')

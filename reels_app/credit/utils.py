@@ -5,29 +5,26 @@ from flask import current_app
 from openpyxl import load_workbook
 import tmdbsimple as tmdb
 
-tmdb.API_KEY = os.getenv('TMDB_API')
+tmdb.API_KEY = os.getenv('TMDB_API_KEY')
 tmdb.REQUESTS_TIMEOUT = 5
 
 
 class Film:
-    """
-    DIR ####; SCR ####; PROD ####. U.S., 1984, color, 160 min. Lang. RATED PG
-    """
 
     def __init__(self, title, imdb_id):
-        self.title = title  # done
-        self.imdb_id = imdb_id  # done
-        self.tmdb_id = None  # done
-        self.movie_info = None  # done
-        self.directors = []  # done
-        self.writers = []  # done
-        self.producers = []  # done
-        self.countries = []  # done
-        self.languages = []  # done
-        self.release_date = None  # done
-        self.runtime = None  # done
-        self.genres = []  # done
-        self.rating = None  # done
+        self.title = title
+        self.imdb_id = imdb_id
+        self.tmdb_id = None
+        self.movie_info = None
+        self.directors = []
+        self.writers = []
+        self.producers = []
+        self.countries = []
+        self.languages = []
+        self.release_date = None
+        self.runtime = None
+        self.genres = []
+        self.rating = None
 
     def get_tmdb_id(self):
         response = tmdb.Find(self.imdb_id).info(external_source='imdb_id')
@@ -128,18 +125,6 @@ def build_film_list(directory):
         film.get_genres()
         film.get_crew()
         film.get_rating()
-        # print(f'Title: {film.title}')
-        # print(f'TMDB ID: {film.tmdb_id}')
-        # print(f'Release Date: {film.release_date}')
-        # print(f'Runtime: {film.runtime}')
-        # print(f'Countries: {film.countries}')
-        # print(f'Languages: {film.languages}')
-        # print(f'Genres: {film.genres}')
-        # print(f'Directors: {film.directors}')
-        # print(f'Writers: {film.writers}')
-        # print(f'Producers: {film.producers}')
-        # print(f'Rating: {film.rating}')
-        # print('-------')
 
         if (len(film.languages) == 1) and (film.languages[0] == 'English'):
             language = ''
