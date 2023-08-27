@@ -1,9 +1,11 @@
+import io
 import os
+import pathlib
+import zipfile
 
 from flask import (Blueprint, current_app, flash, redirect, render_template,
-                   request, url_for)
+                   request, send_file, url_for)
 from werkzeug.utils import secure_filename
-import tmdbsimple as tmdb
 
 from reels_app.credit.utils import build_film_list
 
@@ -29,6 +31,29 @@ def upload_credits_list():
 
         build_film_list(current_app.config['CREDITS_FOLDER'])
 
-        return redirect(url_for('credit.upload_credits_list')
-                        )
+        return redirect(url_for('credit.download_credits'))
+
     return render_template('upload_credits_list.html', title='Credits List')
+
+
+@credit.route('/download-credits', methods=['GET', 'POST'])
+def download_credits():
+    files = os.listdir(current_app.config['CREDITS_FOLDER'])
+
+    base_path = pathlib.Path(current_app.config['CREDITS_FOLDER'])
+
+    if request.method == 'POST':
+        data = io.BytesIO()
+
+        with zipfile.ZipFile(data, mode='w') as z:
+            for item in base_path.iterdir():
+                if item.name[-4:] == 'docx':
+                    z.write(item, os.path.basename(item))
+        data.seek(0)
+
+        return send_file(data, mimetype='application/zip',
+                         as_attachment=True,
+                         download_name='credits.zip')
+
+    return render_template('download-files.html', files=files,
+                           file_type='DOCX', title='Download Credits')

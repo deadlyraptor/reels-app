@@ -115,7 +115,7 @@ def build_film_list(directory):
                     imdb_id=ws.cell(row, 2).value)
         films.append(film)
 
-    # create a Word doc
+    # create a blank Word doc
     document = Document()
 
     for film in films:
