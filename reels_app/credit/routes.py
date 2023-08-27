@@ -9,15 +9,6 @@ from reels_app.credit.utils import build_film_list
 
 credit = Blueprint('credit', __name__)
 
-"""
-[X] 1. Format a workbook with the title of the film and its IMDB ID
-[X] 2. Upload the workbook to Reels
-[X] 3. Parse the workbook, grab the IMDB ID (dict)
-[X] 4. Query TMDB using the Find method
-[] 5. Append film credits to the film dict
-[] 6. Write the contents of the dict into a text file following AFI style
-"""
-
 
 @credit.route('/upload-credits-list', methods=['GET', 'POST'])
 def upload_credits_list():

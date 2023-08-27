@@ -1,5 +1,6 @@
 import os
 
+from docx import Document
 from flask import current_app
 from openpyxl import load_workbook
 import tmdbsimple as tmdb
@@ -114,6 +115,9 @@ def build_film_list(directory):
                     imdb_id=ws.cell(row, 2).value)
         films.append(film)
 
+    # create a Word doc
+    document = Document()
+
     for film in films:
         # Each of the class's attributes will be populated in this loop
         film.get_tmdb_id()
@@ -143,12 +147,19 @@ def build_film_list(directory):
         else:
             language = f'In {"/".join(film.languages)} with English subtitles.'
 
-        print(
+        paragraph = (
             f'DIR {", ".join(film.directors)}; '
             f'SCR {", ".join(film.writers)}; '
             f'PROD {", ".join(film.producers)}; '
             f'{"/".join(film.countries)}, '
-            f'{film.release_date}, color, {film.runtime} min. '
+            f'{film.release_date}, color/b&w, {film.runtime} min. '
             f'{language}'
             f' RATED {film.rating}'
         )
+
+        document.add_paragraph(paragraph)
+
+    # os.path.join accounts for OS-dependent path separators
+    document.save(os.path.join(
+        current_app.config['CREDITS_FOLDER'],
+        'credits.docx'))
