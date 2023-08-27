@@ -125,15 +125,30 @@ def build_film_list(directory):
         film.get_genres()
         film.get_crew()
         film.get_rating()
-        print(f'Title: {film.title}')
-        print(f'TMDB ID: {film.tmdb_id}')
-        print(f'Release Date: {film.release_date}')
-        print(f'Runtime: {film.runtime}')
-        print(f'Countries: {film.countries}')
-        print(f'Languages: {film.languages}')
-        print(f'Genres: {film.genres}')
-        print(f'Directors: {film.directors}')
-        print(f'Writers: {film.writers}')
-        print(f'Producers: {film.producers}')
-        print(f'Rating: {film.rating}')
-        print('-------')
+        # print(f'Title: {film.title}')
+        # print(f'TMDB ID: {film.tmdb_id}')
+        # print(f'Release Date: {film.release_date}')
+        # print(f'Runtime: {film.runtime}')
+        # print(f'Countries: {film.countries}')
+        # print(f'Languages: {film.languages}')
+        # print(f'Genres: {film.genres}')
+        # print(f'Directors: {film.directors}')
+        # print(f'Writers: {film.writers}')
+        # print(f'Producers: {film.producers}')
+        # print(f'Rating: {film.rating}')
+        # print('-------')
+
+        if (len(film.languages) == 1) and (film.languages[0] == 'English'):
+            language = ''
+        else:
+            language = f'In {"/".join(film.languages)} with English subtitles.'
+
+        print(
+            f'DIR {", ".join(film.directors)}; '
+            f'SCR {", ".join(film.writers)}; '
+            f'PROD {", ".join(film.producers)}; '
+            f'{"/".join(film.countries)}, '
+            f'{film.release_date}, color, {film.runtime} min. '
+            f'{language}'
+            f' RATED {film.rating}'
+        )
