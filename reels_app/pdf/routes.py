@@ -52,11 +52,11 @@ def upload_pdf(pdf_type):
         # This if statement ensures the template is rendered correctly,
         # depending on whether a Deluxe invoice or box office report is
         # uploaded.
-        return render_template('uploads/upload-pdf.html',
+        return render_template('upload/upload-pdf.html',
                                pdf_type='box-office-report',
                                title='Upload Box Office Report')
     elif pdf_type == 'deluxe-invoice':
-        return render_template('uploads/upload-pdf.html',
+        return render_template('upload/upload-pdf.html',
                                pdf_type='deluxe-invoice',
                                title='Upload Deluxe Invoice')
 

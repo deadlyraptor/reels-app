@@ -32,7 +32,7 @@ def upload_credits_list():
 
         return redirect(url_for('credit.download_credits'))
 
-    return render_template('uploads/upload_credits_list.html',
+    return render_template('upload/upload-credits-list.html',
                            title='Credits List')
 
 
@@ -58,5 +58,5 @@ def download_credits():
                          as_attachment=True,
                          download_name='credits.zip')
 
-    return render_template('downloads/download-files.html', files=files,
+    return render_template('download/download-files.html', files=files,
                            file_type='DOCX', title='Download Credits')

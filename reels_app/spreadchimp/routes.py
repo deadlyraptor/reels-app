@@ -39,7 +39,7 @@ def upload_spreadsheet():
 
         return redirect(url_for('spreadchimp.download_csvs'))
 
-    return render_template('uploads/upload-spreadsheet.html',
+    return render_template('upload/upload-spreadsheet.html',
                            title='Upload Spreadsheet')
 
 

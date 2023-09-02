@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}{{ title }}{% endblock title %}
+{% block content %}
+<h1>{{ title }}</h1>
+
+{{ dropzone.create(action=url_for('pdf.upload_pdf', pdf_type=pdf_type)) }}
+
+<hr>
+<p><a href="{{ url_for('main.index') }}">Go back</a></p>
+{% endblock content %}
+
+{% block scripts %}
+{{ dropzone.style('border: 2px dashed #0087F7; margin: 2%; min-height: 200px;') }}
+{{ dropzone.load_js() }}
+{{ dropzone.config(redirect_url=url_for('pdf.download_pdfs'),
+default_message='<span class="dropzone-message">Drag and drop, or browse your files</span>')}}
+{% endblock scripts %}
