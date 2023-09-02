@@ -3,9 +3,8 @@ import os
 import pathlib
 import zipfile
 
-from flask import (Blueprint, current_app, flash, redirect,
-                   request, render_template, send_file, send_from_directory,
-                   url_for)
+from flask import (Blueprint, current_app, flash, redirect, render_template,
+                   request, send_file, send_from_directory, url_for)
 from werkzeug.utils import secure_filename
 
 rename = Blueprint('rename', __name__)

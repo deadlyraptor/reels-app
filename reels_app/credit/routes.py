@@ -47,6 +47,8 @@ def download_credits():
 
         with zipfile.ZipFile(data, mode='w') as z:
             for item in base_path.iterdir():
+                # the download folder still has the .xlsx file so the following
+                # code excludes it from the download
                 if item.name[-4:] == 'docx':
                     z.write(item, os.path.basename(item))
         data.seek(0)

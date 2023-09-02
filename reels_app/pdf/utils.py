@@ -5,7 +5,7 @@ from PyPDF2 import PdfReader, PdfWriter
 
 
 def split(directory):
-    """Split the DistrubtorbyFilmandType PDF into multiple PDFs per film."""
+    """Split the Distrubtor by Film and Type report into separate PDFs."""
     item = os.listdir(directory)[0]  # get the PDF filename
 
     # join the directory & PDF file name

@@ -3,11 +3,11 @@ import os
 import pathlib
 import zipfile
 
-from flask import (Blueprint, current_app, flash, redirect,
-                   request, render_template, url_for, send_file)
+from flask import (Blueprint, current_app, flash, redirect, render_template,
+                   request, send_file, url_for)
 from werkzeug.utils import secure_filename
 
-from reels_app.pdf.pdf import split, rename_deluxe
+from reels_app.pdf.utils import split, rename_deluxe
 
 pdf = Blueprint('pdf', __name__)
 

@@ -3,15 +3,13 @@ import os
 import pathlib
 import zipfile
 
-from flask import (Blueprint, current_app, flash,
-                   redirect, request, render_template, send_file)
-from flask.helpers import url_for
+from flask import (Blueprint, current_app, flash, redirect, request,
+                   render_template, send_file, url_for)
 from werkzeug.utils import secure_filename
 
 from openpyxl.utils.exceptions import InvalidFileException
 
-
-from reels_app.spreadchimp.spready import spready
+from reels_app.spreadchimp.utils import spready
 
 spreadchimp = Blueprint('spreadchimp', __name__)
 
