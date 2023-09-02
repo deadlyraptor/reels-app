@@ -30,8 +30,8 @@ class Film:
         languages (lst): a list of the film's spoken languages
         release_date (str): the film's year of release
         runtime (str): the film's runtime
-        genres (lst): a list of the film's genres
         rating (str): the film's MPAA rating
+        genres (lst): a list of the film's genres
     """
 
     def __init__(self, title, imdb_id):
@@ -47,8 +47,8 @@ class Film:
         self.languages = []
         self.release_date = None
         self.runtime = None
-        self.genres = []
         self.rating = None
+        self.genres = []
 
     def get_tmdb_id(self):
         """Get the film's TMDB ID and assigns it to the tmdb_id attribute."""
@@ -165,7 +165,6 @@ def get_credits(directory):
         film.get_runtime()
         film.get_countries()
         film.get_languages()
-        film.get_genres()
         film.get_crew()
         film.get_rating()
 

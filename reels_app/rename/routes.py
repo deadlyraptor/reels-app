@@ -74,4 +74,4 @@ def download_photos():
                          as_attachment=True,
                          download_name='photos.zip')
 
-    return render_template('downloads/download-photos.html', files=files)
+    return render_template('download/download-photos.html', files=files)

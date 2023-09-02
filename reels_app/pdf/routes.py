@@ -81,5 +81,5 @@ def download_pdfs():
                          as_attachment=True,
                          download_name='pdfs.zip')
 
-    return render_template('downloads/download-files.html', files=files,
+    return render_template('download/download-files.html', files=files,
                            file_type='PDFs', title='Download PDFs')

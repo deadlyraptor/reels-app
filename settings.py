@@ -13,7 +13,7 @@ def validate_directory(directory):
 
 
 # The directories to be created if they don't exist.
-directories = ['csvs', 'pdfs', 'uploads', 'uploads/credits/',
+directories = ['csvs', 'pdfs', 'uploads', 'uploads/credits/', 'uploads/genres',
                'uploads/spreadsheets', 'uploads/photos', 'uploads/pdfs',
                'uploads/invoices', 'uploads/purchase_order']
 
@@ -24,6 +24,7 @@ for directory in directories:
 class Config():
     SECRET_KEY = os.getenv('SECRET_KEY')
     CREDITS_FOLDER = 'uploads/credits'
+    GENRE_FOLDER = 'uploads/genres'
     INVOICE_FOLDER = 'uploads/invoices'
     PHOTOS_FOLDER = 'uploads/photos'
     PDF_FOLDER = 'uploads/pdfs'

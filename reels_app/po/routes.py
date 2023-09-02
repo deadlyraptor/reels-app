@@ -84,5 +84,5 @@ def download_purchase_order():
                          as_attachment=True,
                          download_name='po.zip')
 
-    return render_template('downloads/download-files.html', files=files,
+    return render_template('download/download-files.html', files=files,
                            file_type='.xlsx', title='Download PO')

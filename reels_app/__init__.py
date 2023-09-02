@@ -4,6 +4,7 @@ from flask_dropzone import Dropzone
 
 from reels_app.main.routes import main
 from reels_app.credit.routes import credit
+from reels_app.genres.routes import genre
 from reels_app.pdf.routes import pdf
 from reels_app.po.routes import po
 from reels_app.rename.routes import rename
@@ -28,6 +29,7 @@ def register_blueprints(app):
     """Register Flask blueprints."""
     app.register_blueprint(main)
     app.register_blueprint(credit)
+    app.register_blueprint(genre)
     app.register_blueprint(pdf)
     app.register_blueprint(po)
     app.register_blueprint(rename)
