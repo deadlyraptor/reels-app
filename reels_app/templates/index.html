@@ -36,7 +36,7 @@
             <div class="card-header">AFI Silver</div>
             <div class="card-body d-flex flex-column">
                 <h5 class="card-title">Box Office Report</h5>
-                <p class="card-text">Upload the weekly box office report PDF and split the pages by film.</p>
+                <p class="card-text">Split the Distributors By Film and Type report by film.</p>
                 <a href="{{ url_for('pdf.upload_pdf', pdf_type='box-office-report') }}"
                     class="btn btn-primary mt-auto">Upload BOR</a>
             </div>
@@ -45,10 +45,10 @@
 
     <div class="col">
         <div class="card h-100">
-            <div class="card-header">AFI Silver</div>
+            <div class="card-header text-bg-info">AFI Silver</div>
             <div class="card-body d-flex flex-column">
-                <h5 class="card-title">Deluxe Invoices</h5>
-                <p class="card-text">Upload a batch of Deluxe invoices and rename them.</p>
+                <h5 class="card-title">Rename Deluxe Invoices</h5>
+                <p class="card-text">Rename a batch of Deluxe invoices according to internal AFI Silver style.</p>
                 <a href="{{ url_for('pdf.upload_pdf', pdf_type='deluxe-invoice') }}"
                     class="btn btn-primary mt-auto">Upload
                     invoices</a>
@@ -61,8 +61,8 @@
             <div class="card-header">AFI Silver</div>
             <div class="card-body d-flex flex-column">
                 <h5 class="card-title">Create Deluxe PO</h5>
-                <p class="card-text">Upload a Deluxe PO template and invoices and create a completed PO.</p>
-                <a href="{{ url_for('po.upload_po_template') }}" class="btn btn-primary mt-auto">Prep PO</a>
+                <p class="card-text">Generate a complete Deluxe PO using a template and invoices.</p>
+                <a href="{{ url_for('po.upload_po_template') }}" class="btn btn-primary mt-auto">Upload PO</a>
             </div>
         </div>
     </div>
@@ -72,8 +72,8 @@
             <div class="card-header">AFI Silver</div>
             <div class="card-body d-flex flex-column">
                 <h5 class="card-title">Film Credits</h5>
-                <p class="card-text">Get film credits from TheMovieDB.</p>
-                <a href="{{ url_for('credit.upload_credits_list') }}" class="btn btn-primary mt-auto">Upload credits
+                <p class="card-text">Get a film's credits from The Movie Database (TMDB).</p>
+                <a href="{{ url_for('credit.upload_credits_list') }}" class="btn btn-primary mt-auto">Upload film
                     list</a>
             </div>
         </div>
