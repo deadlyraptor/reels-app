@@ -32,7 +32,8 @@ def upload_po_template():
         flash('PO template successfully uploaded', 'success')
         return redirect(url_for('po.upload_deluxe_invoices'))
 
-    return render_template('upload-po-template.html', title='Purchase Order')
+    return render_template('uploads/upload-po-template.html',
+                           title='Purchase Order')
 
 
 @po.route('/upload-deluxe-invoices', methods=['GET', 'POST'])
@@ -60,7 +61,7 @@ def upload_deluxe_invoices():
         create_po(invoices)
         return redirect(url_for('po.download_purchase_order'))
 
-    return render_template('upload-deluxe-invoices.html',
+    return render_template('uploads/upload-deluxe-invoices.html',
                            title='Upload Deluxe invoices')
 
 
@@ -83,5 +84,5 @@ def download_purchase_order():
                          as_attachment=True,
                          download_name='po.zip')
 
-    return render_template('download-files.html', files=files,
+    return render_template('downloads/download-files.html', files=files,
                            file_type='.xlsx', title='Download PO')

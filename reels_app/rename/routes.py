@@ -26,7 +26,7 @@ def upload_photos():
         flash('Photos successfully uploaded', 'success')
         return redirect(url_for('rename.rename_photos'))
 
-    return render_template('upload-photos.html', title='Upload Photos')
+    return render_template('uploads/upload-photos.html', title='Upload Photos')
 
 
 @rename.route('/rename-photos', methods=['GET', 'POST'])
@@ -47,7 +47,7 @@ def rename_photos():
             flash('Photos successfully renamed', 'success')
             return redirect(url_for('rename.download_photos'))
 
-    return render_template('rename-photos.html', title='Rename Photos')
+    return render_template('uploads/rename-photos.html', title='Rename Photos')
 
 
 @rename.route('/uploads/photos/<path:filename>')
@@ -74,4 +74,4 @@ def download_photos():
                          as_attachment=True,
                          download_name='photos.zip')
 
-    return render_template('download-photos.html', files=files)
+    return render_template('downloads/download-photos.html', files=files)
