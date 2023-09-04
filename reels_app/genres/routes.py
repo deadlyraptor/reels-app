@@ -12,8 +12,8 @@ from reels_app.genres.utils import write_genre_trailer
 genre = Blueprint('genre', __name__)
 
 
-@genre.route('/upload-genre-list', methods=['GET', 'POST'])
-def upload_genre_list():
+@genre.route('/upload-genre-trailer-list', methods=['GET', 'POST'])
+def upload_genre_trailer_list():
     """Upload an .xlsx file with a list of films and their IMDB IDs."""
     if request.method == 'POST':
         for uploaded_file in request.files.getlist('file'):
@@ -30,14 +30,14 @@ def upload_genre_list():
 
         write_genre_trailer(current_app.config['GENRE_FOLDER'])
 
-        return redirect(url_for('genre.download_genres'))
+        return redirect(url_for('genre.download_genres_trailer'))
 
-    return render_template('upload/upload-genre-list.html',
+    return render_template('upload/upload-genre-trailer-list.html',
                            title='Genre List')
 
 
-@genre.route('/download-genres', methods=['GET', 'POST'])
-def download_genres():
+@genre.route('/download-genres-trailer', methods=['GET', 'POST'])
+def download_genres_trailer():
     """Download the uploaded list, now with the genres and trailer URL."""
     files = os.listdir(current_app.config['GENRE_FOLDER'])
 
