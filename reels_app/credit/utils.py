@@ -49,6 +49,7 @@ class Film:
         self.runtime = None
         self.rating = None
         self.genres = []
+        self.trailer = None
 
     def get_tmdb_id(self):
         """Get the film's TMDB ID and assigns it to the tmdb_id attribute."""
@@ -132,6 +133,24 @@ class Film:
         for genre in tmdb_genres:
             genres.append(genre['name'])
         self.genres = genres
+
+    def get_trailer(self):
+        """Get the film's videos."""
+        video_list = tmdb.Movies(self.tmdb_id).videos()['results']
+        # older films likely won't have trailers
+        if video_list is False:
+            self.trailer = ''
+        else:
+            for video in video_list:
+                # the Video API call returns various types of videos, including
+                # teasers, clips, featurettes, etc. but we only want a trailer
+                if video['type'] == 'Trailer':
+                    trailer = f'https://www.youtube.com/watch?v={video["key"]}'
+                    self.trailer = trailer
+                    # a film can have multiple trailers and there is no way to
+                    # programatically tell which is the best one to use so just
+                    # grab the first one then exit the loop
+                    break
 
 
 def get_credits(directory):

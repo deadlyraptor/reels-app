@@ -7,7 +7,7 @@ from flask import (Blueprint, current_app, flash, redirect, render_template,
                    request, send_file, url_for)
 from werkzeug.utils import secure_filename
 
-from reels_app.genres.utils import get_genres
+from reels_app.genres.utils import write_genre_trailer
 
 genre = Blueprint('genre', __name__)
 
@@ -28,7 +28,7 @@ def upload_genre_list():
                 ))
         flash('Genre list successfully uploaded', 'success')
 
-        get_genres(current_app.config['GENRE_FOLDER'])
+        write_genre_trailer(current_app.config['GENRE_FOLDER'])
 
         return redirect(url_for('genre.download_genres'))
 

@@ -10,7 +10,7 @@ tmdb.API_KEY = os.getenv('TMDB_API_KEY')
 tmdb.REQUESTS_TIMEOUT = 5
 
 
-def get_genres(directory):
+def write_genre_trailer(directory):
     """Loop over the uploaded workbook and get the film's genres."""
     directory = current_app.config['GENRE_FOLDER']
     manifest = os.listdir(directory)[0]
@@ -40,8 +40,10 @@ def get_genres(directory):
         film.get_tmdb_id()
         film.get_movie_info()
         film.get_genres()
+        film.get_trailer()
 
         ws[f'G{first_row + count}'] = (', '.join(film.genres))
+        ws[f'H{first_row + count}'] = film.trailer
 
         count += 1
 
