@@ -95,14 +95,6 @@ class Film:
             languages.append(language['english_name'])
         self.languages = languages
 
-    def get_genres(self):
-        """Get the film's genres."""
-        tmdb_genres = self.movie_info['genres']
-        genres = []
-        for genre in tmdb_genres:
-            genres.append(genre['name'])
-        self.genres = genres
-
     def get_crew(self):
         """Get the film's director(s), screenwriter(s), and producer(s)."""
         crew = tmdb.Movies(self.tmdb_id).credits()['crew']
@@ -132,6 +124,14 @@ class Film:
                     self.rating = 'NOT RATED'
                 else:
                     self.rating = f'RATED {country["certification"]}'
+
+    def get_genres(self):
+        """Get the film's genres."""
+        tmdb_genres = self.movie_info['genres']
+        genres = []
+        for genre in tmdb_genres:
+            genres.append(genre['name'])
+        self.genres = genres
 
 
 def get_credits(directory):
