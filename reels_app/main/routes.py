@@ -1,5 +1,9 @@
-from flask import Blueprint, flash, render_template, request, url_for
-from werkzeug.utils import redirect
+import os
+
+from flask import (Blueprint, current_app, flash, render_template, request,
+                   url_for)
+from flask.views import View
+from werkzeug.utils import redirect, secure_filename
 
 from reels_app.main.utils import delete_files
 
@@ -14,6 +18,7 @@ def index():
         delete_files('csvs')
         delete_files('pdfs')
         delete_files('uploads/credits')
+        delete_files('uploads/files')
         delete_files('uploads/genres')
         delete_files('uploads/invoices')
         delete_files('uploads/photos')
@@ -25,3 +30,29 @@ def index():
         return redirect(url_for('main.index'))
 
     return render_template('index.html')
+
+
+class UploadView(View):
+    methods = ['GET', 'POST']
+
+    def __init__(self):
+        self.upload_folder = current_app.config['UPLOAD_FOLDER']
+
+    def dispatch_request(self):
+        if request.method == 'POST':
+            for uploaded_file in request.files.getlist('file'):
+                if uploaded_file.filename == '':
+                    flash('No file selected', 'warning')
+                    return redirect(request.url)
+                else:
+                    secured_uploaded_file = secure_filename(
+                        uploaded_file.filename)
+                    uploaded_file.save(os.path.join(
+                        self.upload_folder,
+                        secured_uploaded_file
+                    ))
+
+            flash('File successfully uploaded', 'success')
+            return redirect(url_for('main.index'))
+        else:
+            return render_template('/upload/upload.html')

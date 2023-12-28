@@ -30,3 +30,4 @@ class Config():
     PDF_FOLDER = 'uploads/pdfs'
     PO_FOLDER = 'uploads/purchase_order'
     SPREADSHEET_FOLDER = 'uploads/spreadsheets'
+    UPLOAD_FOLDER = 'uploads/files'

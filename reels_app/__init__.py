@@ -1,14 +1,16 @@
+import os
 from flask import Flask
 
 from flask_dropzone import Dropzone
 
-from reels_app.main.routes import main
+from reels_app.main.routes import main, UploadView
 from reels_app.credit.routes import credit
 from reels_app.genres.routes import genre
 from reels_app.pdf.routes import pdf
 from reels_app.po.routes import po
 from reels_app.rename.routes import rename
 from reels_app.spreadchimp.routes import spreadchimp
+
 
 from settings import Config
 
@@ -18,6 +20,10 @@ dropzone = Dropzone()
 def create_app(config_class=Config):
     app = Flask(__name__)
     app.config.from_object(config_class)
+
+    app.add_url_rule('/upload-file',
+                     view_func=UploadView.as_view(
+                         name='upload_file'))
 
     register_blueprints(app)
     dropzone.init_app(app)
