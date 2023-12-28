@@ -6,6 +6,7 @@ from flask.views import View
 from werkzeug.utils import redirect, secure_filename
 
 from reels_app.main.utils import delete_files
+from reels_app.pdf.utils import split
 
 main = Blueprint('main', __name__)
 
@@ -38,7 +39,7 @@ class UploadView(View):
     def __init__(self):
         self.upload_folder = current_app.config['UPLOAD_FOLDER']
 
-    def dispatch_request(self):
+    def dispatch_request(self, file_type, function):
         if request.method == 'POST':
             for uploaded_file in request.files.getlist('file'):
                 if uploaded_file.filename == '':
@@ -53,6 +54,13 @@ class UploadView(View):
                     ))
 
             flash('File successfully uploaded', 'success')
+
+            if function == 'box-office-report':
+                split(self.upload_folder)
+
             return redirect(url_for('main.index'))
         else:
-            return render_template('/upload/upload.html')
+            # the page title is the function without dashes and title cased
+            return render_template('/upload/upload.html',
+                                   file_type=file_type, function=function,
+                                   title=function.replace('-', ' ').title())

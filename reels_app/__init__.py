@@ -21,7 +21,7 @@ def create_app(config_class=Config):
     app = Flask(__name__)
     app.config.from_object(config_class)
 
-    app.add_url_rule('/upload-file',
+    app.add_url_rule('/upload-file/<file_type>/<function>',
                      view_func=UploadView.as_view(
                          name='upload_file'))
 
