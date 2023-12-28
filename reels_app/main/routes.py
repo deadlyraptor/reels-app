@@ -1,7 +1,10 @@
+import io
 import os
+import pathlib
+import zipfile
 
 from flask import (Blueprint, current_app, flash, render_template, request,
-                   url_for)
+                   send_file, url_for)
 from flask.views import View
 from werkzeug.utils import redirect, secure_filename
 
@@ -57,10 +60,34 @@ class UploadView(View):
 
             if function == 'box-office-report':
                 split(self.upload_folder)
-
-            return redirect(url_for('main.index'))
+                return redirect(url_for('download_files', file_type='pdfs'))
         else:
             # the page title is the function without dashes and title cased
             return render_template('/upload/upload.html',
                                    file_type=file_type, function=function,
                                    title=function.replace('-', ' ').title())
+
+
+class DownloadView(View):
+    methods = ['GET', 'POST']
+
+    def dispatch_request(self, file_type):
+
+        files = os.listdir(file_type)
+        base_path = pathlib.Path(file_type)
+
+        if request.method == 'POST':
+            data = io.BytesIO()
+
+            with zipfile.ZipFile(data, mode='w') as z:
+                for item in base_path.iterdir():
+                    z.write(item, os.path.basename(item))
+
+            data.seek(0)
+
+            return send_file(data, mimetype='application/zip',
+                             as_attachment=True,
+                             download_name='files.zip')
+        else:
+            return render_template('download/download.html',
+                                   files=files, title='Download files')

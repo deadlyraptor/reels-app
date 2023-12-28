@@ -3,7 +3,7 @@ from flask import Flask
 
 from flask_dropzone import Dropzone
 
-from reels_app.main.routes import main, UploadView
+from reels_app.main.routes import main, DownloadView, UploadView
 from reels_app.credit.routes import credit
 from reels_app.genres.routes import genre
 from reels_app.pdf.routes import pdf
@@ -24,6 +24,10 @@ def create_app(config_class=Config):
     app.add_url_rule('/upload-file/<file_type>/<function>',
                      view_func=UploadView.as_view(
                          name='upload_file'))
+    app.add_url_rule('/download_files/<file_type>',
+                     view_func=DownloadView.as_view(
+                         name='download_files'
+                     ))
 
     register_blueprints(app)
     dropzone.init_app(app)
