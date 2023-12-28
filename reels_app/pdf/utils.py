@@ -4,6 +4,42 @@ import re
 from PyPDF2 import PdfReader, PdfWriter
 
 
+def rename_deluxe_invoices(directory):
+    """Batch rename Deluxe invoices.
+
+    The function searches the PDF for the invoice number and film title, then
+    creates a new PDF with the following naming scheme:
+
+    Deluxe Inv {invoice-number} {film-title}.pdf
+    """
+    for invoice in os.listdir(directory):
+        new_path = os.path.join(directory, invoice)
+
+        pdf = PdfReader(new_path)
+        pdf_text = pdf.pages[0].extract_text()
+
+        # get invoice number and strip new lines
+        invoice_number = re.search(
+            '(?<=Invoice Date:)(.*)(?=Customer Account No:)(?s)',
+            pdf_text).group(0).strip()
+
+        # replace any illegal characters in the film title with a space
+        # otherwise function will error due to filename issues
+        film_title = re.search(
+            '(?<=Title: )(.*)', pdf_text).group(0).strip().upper()
+        film_title_sanitized = re.sub(
+            '\"|\:|\/|\\|\<|\>|\||\?|\*|\n', ' ', film_title)
+
+        pdf_writer = PdfWriter()
+        pdf_writer.add_page(pdf.pages[0])
+
+        # write to a new PDF
+        with open((f'pdfs/Deluxe Inv {invoice_number} '
+                  f'{film_title_sanitized}.pdf'),
+                  mode='wb') as output_pdf:
+            pdf_writer.write(output_pdf)
+
+
 def split_box_office_report(directory):
     """Split the Distrubtor by Film and Type report into separate PDFs."""
     item = os.listdir(directory)[0]  # get the PDF filename
@@ -37,40 +73,4 @@ def split_box_office_report(directory):
 
         # write to a new PDF
         with open(f'pdfs/{new_film_title}-{page}.pdf', mode='wb') as output_pdf:
-            pdf_writer.write(output_pdf)
-
-
-def rename_deluxe(directory):
-    """Batch rename Deluxe invoices.
-
-    The function searches the PDF for the invoice number and film title, then
-    creates a new PDF with the following naming scheme:
-
-    Deluxe Inv {invoice-number} {film-title}.pdf
-    """
-    for invoice in os.listdir(directory):
-        new_path = os.path.join(directory, invoice)
-
-        pdf = PdfReader(new_path)
-        pdf_text = pdf.pages[0].extract_text()
-
-        # get invoice number and strip new lines
-        invoice_number = re.search(
-            '(?<=Invoice Date:)(.*)(?=Customer Account No:)(?s)',
-            pdf_text).group(0).strip()
-
-        # replace any illegal characters in the film title with a space
-        # otherwise function will error due to filename issues
-        film_title = re.search(
-            '(?<=Title: )(.*)', pdf_text).group(0).strip().upper()
-        film_title_sanitized = re.sub(
-            '\"|\:|\/|\\|\<|\>|\||\?|\*|\n', ' ', film_title)
-
-        pdf_writer = PdfWriter()
-        pdf_writer.add_page(pdf.pages[0])
-
-        # write to a new PDF
-        with open((f'pdfs/Deluxe Inv {invoice_number} '
-                  f'{film_title_sanitized}.pdf'),
-                  mode='wb') as output_pdf:
             pdf_writer.write(output_pdf)
