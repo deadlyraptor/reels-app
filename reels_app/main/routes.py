@@ -9,7 +9,7 @@ from flask.views import View
 from werkzeug.utils import redirect, secure_filename
 
 from reels_app.main.utils import delete_files
-from reels_app.pdf.utils import split
+from reels_app.pdf.utils import split_box_office_report
 
 main = Blueprint('main', __name__)
 
@@ -59,7 +59,7 @@ class UploadView(View):
             flash('File successfully uploaded', 'success')
 
             if function == 'box-office-report':
-                split(self.upload_folder)
+                split_box_office_report(self.upload_folder)
                 return redirect(url_for('download_files', file_type='pdfs'))
         else:
             # the page title is the function without dashes and title cased

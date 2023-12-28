@@ -7,7 +7,7 @@ from flask import (Blueprint, current_app, flash, redirect, render_template,
                    request, send_file, url_for)
 from werkzeug.utils import secure_filename
 
-from reels_app.pdf.utils import split, rename_deluxe
+from reels_app.pdf.utils import split_box_office_report, rename_deluxe
 
 pdf = Blueprint('pdf', __name__)
 
@@ -18,7 +18,7 @@ def upload_pdf(pdf_type):
 
     pdf_type
         This variable determines the flow of the POST request. If it's set to
-        'box-office-report', then split() is called; if it's set to
+        'box-office-report', then split_box_office_report() is called; if it's set to
         'deluxe-invoice', then rename_deluxe() is called.
     """
     pdf_dir = current_app.config['PDF_FOLDER']
@@ -41,7 +41,7 @@ def upload_pdf(pdf_type):
 
         if pdf_type == 'box-office-report':
             # split the PDF(s)
-            split(pdf_dir)
+            split_box_office_report(pdf_dir)
         elif pdf_type == 'deluxe-invoice':
             # rename the PDF(s)
             rename_deluxe(pdf_dir)

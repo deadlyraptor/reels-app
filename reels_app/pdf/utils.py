@@ -4,7 +4,7 @@ import re
 from PyPDF2 import PdfReader, PdfWriter
 
 
-def split(directory):
+def split_box_office_report(directory):
     """Split the Distrubtor by Film and Type report into separate PDFs."""
     item = os.listdir(directory)[0]  # get the PDF filename
 
