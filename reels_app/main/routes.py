@@ -8,6 +8,8 @@ from flask import (Blueprint, current_app, flash, render_template, request,
 from flask.views import View
 from werkzeug.utils import redirect, secure_filename
 
+from reels_app.credit.utils import get_credits
+from reels_app.genres.utils import write_genre_trailer
 from reels_app.main.utils import delete_files
 from reels_app.pdf.utils import rename_deluxe_invoices, split_box_office_report
 from reels_app.po.utils import prep_po, parse_deluxe_invoice
@@ -72,6 +74,12 @@ class UploadView(View):
                     self.upload_folder)
                 # prep the PO
                 prep_po(invoices, self.upload_folder)
+                return redirect(url_for('download_files', file_type='xlsx'))
+            elif function == 'credits':
+                get_credits(self.upload_folder)
+                return redirect(url_for('download_files', file_type='docx'))
+            elif function == 'genre-trailer':
+                write_genre_trailer(self.upload_folder)
                 return redirect(url_for('download_files', file_type='xlsx'))
 
         else:

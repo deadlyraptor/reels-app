@@ -12,7 +12,7 @@ tmdb.REQUESTS_TIMEOUT = 5
 
 def write_genre_trailer(directory):
     """Loop over the uploaded workbook and get the film's genres."""
-    directory = current_app.config['GENRE_FOLDER']
+    directory = current_app.config['UPLOAD_FOLDER']
     manifest = os.listdir(directory)[0]
 
     wb = load_workbook(filename=f'{directory}/{manifest}')
@@ -47,4 +47,4 @@ def write_genre_trailer(directory):
 
         count += 1
 
-    wb.save(filename=f'{directory}/{manifest}')
+    wb.save(filename=f'{current_app.config["DOWNLOAD_FOLDER"]}/{manifest}')
