@@ -8,7 +8,7 @@ from flask import (Blueprint, current_app, flash, redirect, request,
 
 from werkzeug.utils import secure_filename
 
-from reels_app.po.utils import create_po, parse_deluxe_invoice
+from reels_app.po.utils import prep_po, parse_deluxe_invoice
 
 po = Blueprint('po', __name__)
 
@@ -58,7 +58,7 @@ def upload_deluxe_invoices():
         invoices = parse_deluxe_invoice(
             current_app.config['INVOICE_FOLDER'])
         # create the PO
-        create_po(invoices)
+        prep_po(invoices)
         return redirect(url_for('po.download_purchase_order'))
 
     return render_template('upload/upload-deluxe-invoices.html',

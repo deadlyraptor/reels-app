@@ -18,51 +18,56 @@ def parse_deluxe_invoice(directory):
     """
     invoices = []
     for invoice in os.listdir(directory):
-        invoice_data = {}
+        if invoice[-3:] == 'pdf':  # last three letters
 
-        new_path = os.path.join(directory, invoice)
+            invoice_data = {}
 
-        pdf = PdfReader(new_path)
-        pdf_text = pdf.pages[0].extract_text()
+            new_path = os.path.join(directory, invoice)
 
-        # get invoice date
-        invoice_date = re.search(
-            '(?<=Due Date:)(.*)(?=Invoice Number)(?s)', pdf_text
-        ).group(0).strip()
-        invoice_data['Invoice Date'] = invoice_date
+            pdf = PdfReader(new_path)
+            pdf_text = pdf.pages[0].extract_text()
 
-        # get invoice number
-        invoice_number = re.search(
-            '(?<=Invoice Date:)(.*)(?=Customer Account No:)(?s)', pdf_text
-        ).group(0).strip()
-        invoice_data['Invoice Number'] = invoice_number
+            # get invoice date
+            invoice_date = re.search(
+                '(?<=Due Date:)(.*)(?=Invoice Number)(?s)', pdf_text
+            ).group(0).strip()
+            invoice_data['Invoice Date'] = invoice_date
 
-        # get film title
-        film_title = re.search(
-            '(?<=Title: )(.*)', pdf_text
-        ).group(0).strip()
-        invoice_data['Film'] = film_title.upper()
+            # get invoice number
+            invoice_number = re.search(
+                '(?<=Invoice Date:)(.*)(?=Customer Account No:)(?s)', pdf_text
+            ).group(0).strip()
+            invoice_data['Invoice Number'] = invoice_number
 
-        # get open date
-        open_date = re.search(
-            '(?<=OPEN DATE: )(.*)(?=Pay Online)(?s)', pdf_text
-        ).group(0).strip()
-        invoice_data['Open Date'] = open_date
+            # get film title
+            film_title = re.search(
+                '(?<=Title: )(.*)', pdf_text
+            ).group(0).strip()
+            invoice_data['Film'] = film_title.upper()
 
-        # get fee
-        fee = re.search('(?<=TAX AMOUNT:)(.*)(?=  GRAND TOTAL:)(?s)', pdf_text
-                        ).group(0).strip()
-        invoice_data['Fee'] = float(fee[1:])
+            # get open date
+            open_date = re.search(
+                '(?<=OPEN DATE: )(.*)(?=Pay Online)(?s)', pdf_text
+            ).group(0).strip()
+            invoice_data['Open Date'] = open_date
 
-        invoices.append(invoice_data)
+            # get fee
+            fee = re.search('(?<=TAX AMOUNT:)(.*)(?=  GRAND TOTAL:)(?s)', pdf_text
+                            ).group(0).strip()
+            invoice_data['Fee'] = float(fee[1:])
+
+            invoices.append(invoice_data)
+        else:
+            # if the file is not a PDF, just skip it
+            pass
     return invoices
 
 
-def create_po(invoices):
-    """Create the PO."""
+def prep_po(invoices, directory):
+    """Prep the PO."""
     # Cell D31 - {film title}: Delivery Fee - {date} Invoice # {invoice number}
-    directory = current_app.config['PO_FOLDER']
-    purchase_order = os.listdir(directory)[0]
+    # directory = current_app.config['PO_FOLDER']
+    purchase_order = os.listdir(directory)[-1]
 
     wb = load_workbook(filename=f'{directory}/{purchase_order}')
     ws = wb['PO Form']
@@ -80,4 +85,5 @@ def create_po(invoices):
 
         count += 1
 
-    wb.save(filename=f'{directory}/{purchase_order}')
+    wb.save(
+        filename=f'{current_app.config["DOWNLOAD_FOLDER"]}/{purchase_order}')

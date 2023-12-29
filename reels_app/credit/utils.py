@@ -155,7 +155,7 @@ class Film:
 
 def get_credits(directory):
     """Loop over the uploaded workbook and get the credits for each film."""
-    directory = current_app.config['CREDITS_FOLDER']
+    directory = current_app.config['UPLOAD_FOLDER']
     manifest = os.listdir(directory)[0]
 
     wb = load_workbook(filename=f'{directory}/{manifest}')
@@ -207,5 +207,5 @@ def get_credits(directory):
 
     # os.path.join accounts for OS-dependent path separators
     document.save(os.path.join(
-        current_app.config['CREDITS_FOLDER'],
+        current_app.config['DOWNLOAD_FOLDER'],
         'credits.docx'))
