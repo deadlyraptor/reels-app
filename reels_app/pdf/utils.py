@@ -36,7 +36,7 @@ def rename_deluxe_invoices(directory):
         pdf_writer.add_page(pdf.pages[0])
 
         # write to a new PDF
-        with open((f'pdfs/Deluxe Inv {invoice_number} '
+        with open((f'downloads/Deluxe Inv {invoice_number} '
                   f'{film_title_sanitized}.pdf'),
                   mode='wb') as output_pdf:
             pdf_writer.write(output_pdf)
