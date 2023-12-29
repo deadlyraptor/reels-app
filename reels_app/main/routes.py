@@ -22,6 +22,7 @@ def index():
 
         delete_files('csvs')
         delete_files('pdfs')
+        delete_files('downloads')
         delete_files('uploads/credits')
         delete_files('uploads/files')
         delete_files('uploads/genres')
@@ -86,7 +87,7 @@ class DownloadView(View):
     def __init__(self):
         self.download_folder = current_app.config['DOWNLOAD_FOLDER']
 
-    def dispatch_request(self):
+    def dispatch_request(self, file_type):
 
         files = os.listdir(self.download_folder)
         base_path = pathlib.Path(self.download_folder)

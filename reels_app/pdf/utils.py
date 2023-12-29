@@ -1,6 +1,8 @@
 import os
 import re
 
+from flask import current_app
+
 from PyPDF2 import PdfReader, PdfWriter
 
 
@@ -41,7 +43,7 @@ def rename_deluxe_invoices(directory):
 
 
 def split_box_office_report(directory):
-    """Split the Distrubtor by Film and Type report into separate PDFs."""
+    """Split the Distributor by Film and Type report into separate PDFs."""
     item = os.listdir(directory)[0]  # get the PDF filename
 
     # join the directory & PDF file name
@@ -72,5 +74,5 @@ def split_box_office_report(directory):
         pdf_writer.add_page(pdf.pages[page])
 
         # write to a new PDF
-        with open(f'pdfs/{new_film_title}-{page}.pdf', mode='wb') as output_pdf:
+        with open(f'downloads/{new_film_title}-{page}.pdf', mode='wb') as output_pdf:
             pdf_writer.write(output_pdf)
