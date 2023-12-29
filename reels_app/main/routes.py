@@ -10,6 +10,7 @@ from werkzeug.utils import redirect, secure_filename
 
 from reels_app.main.utils import delete_files
 from reels_app.pdf.utils import rename_deluxe_invoices, split_box_office_report
+from reels_app.po.utils import prep_po, parse_deluxe_invoice
 
 main = Blueprint('main', __name__)
 
@@ -60,9 +61,17 @@ class UploadView(View):
 
             if function == 'box-office-report':
                 split_box_office_report(self.upload_folder)
+                return redirect(url_for('download_files', file_type='pdfs'))
             elif function == 'rename-deluxe-invoices':
                 rename_deluxe_invoices(self.upload_folder)
-            return redirect(url_for('download_files', file_type='pdfs'))
+                return redirect(url_for('download_files', file_type='pdfs'))
+            elif function == 'prep-deluxe-po':
+                # parse the invoices
+                invoices = parse_deluxe_invoice(
+                    self.upload_folder)
+                # prep the PO
+                prep_po(invoices, self.upload_folder)
+                return redirect(url_for('download_files', file_type='xlsx'))
 
         else:
             # the page title is the function without dashes and title cased
@@ -74,10 +83,13 @@ class UploadView(View):
 class DownloadView(View):
     methods = ['GET', 'POST']
 
-    def dispatch_request(self, file_type):
+    def __init__(self):
+        self.download_folder = current_app.config['DOWNLOAD_FOLDER']
 
-        files = os.listdir(file_type)
-        base_path = pathlib.Path(file_type)
+    def dispatch_request(self):
+
+        files = os.listdir(self.download_folder)
+        base_path = pathlib.Path(self.download_folder)
 
         if request.method == 'POST':
             data = io.BytesIO()

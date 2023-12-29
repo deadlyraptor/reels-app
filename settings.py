@@ -13,7 +13,7 @@ def validate_directory(directory):
 
 
 # The directories to be created if they don't exist.
-directories = ['csvs', 'pdfs', 'uploads', 'uploads/credits/', 'uploads/genres',
+directories = ['csvs', 'pdfs', 'downloads', 'uploads', 'uploads/credits/', 'uploads/genres',
                'uploads/spreadsheets', 'uploads/photos', 'uploads/pdfs',
                'uploads/invoices', 'uploads/purchase_order']
 
@@ -31,3 +31,4 @@ class Config():
     PO_FOLDER = 'uploads/purchase_order'
     SPREADSHEET_FOLDER = 'uploads/spreadsheets'
     UPLOAD_FOLDER = 'uploads/files'
+    DOWNLOAD_FOLDER = 'downloads'
