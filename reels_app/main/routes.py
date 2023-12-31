@@ -25,13 +25,9 @@ def index():
         delete_files('csvs')
         delete_files('pdfs')
         delete_files('downloads')
-        delete_files('uploads/credits')
         delete_files('uploads/files')
-        delete_files('uploads/genres')
         delete_files('uploads/invoices')
         delete_files('uploads/photos')
-        delete_files('uploads/pdfs')
-        delete_files('uploads/purchase_order')
         delete_files('uploads/spreadsheets')
 
         flash('Files successfully deleted', 'success')
@@ -64,23 +60,23 @@ class UploadView(View):
 
             if function == 'box-office-report':
                 split_box_office_report(self.upload_folder)
-                return redirect(url_for('download_files', file_type='pdfs'))
+                return redirect(url_for('download_files'))
             elif function == 'rename-deluxe-invoices':
                 rename_deluxe_invoices(self.upload_folder)
-                return redirect(url_for('download_files', file_type='pdfs'))
+                return redirect(url_for('download_files'))
             elif function == 'prep-deluxe-po':
                 # parse the invoices
                 invoices = parse_deluxe_invoice(
                     self.upload_folder)
                 # prep the PO
                 prep_po(invoices, self.upload_folder)
-                return redirect(url_for('download_files', file_type='xlsx'))
+                return redirect(url_for('download_files'))
             elif function == 'credits':
                 get_credits(self.upload_folder)
-                return redirect(url_for('download_files', file_type='docx'))
+                return redirect(url_for('download_files'))
             elif function == 'genre-trailer':
                 write_genre_trailer(self.upload_folder)
-                return redirect(url_for('download_files', file_type='xlsx'))
+                return redirect(url_for('download_files'))
 
         else:
             # the page title is the function without dashes and title cased
@@ -95,7 +91,7 @@ class DownloadView(View):
     def __init__(self):
         self.download_folder = current_app.config['DOWNLOAD_FOLDER']
 
-    def dispatch_request(self, file_type):
+    def dispatch_request(self):
 
         files = os.listdir(self.download_folder)
         base_path = pathlib.Path(self.download_folder)

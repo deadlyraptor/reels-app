@@ -1,8 +1,6 @@
 import os
 import re
 
-from flask import current_app
-
 from PyPDF2 import PdfReader, PdfWriter
 
 
