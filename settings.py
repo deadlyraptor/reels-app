@@ -13,7 +13,7 @@ def validate_directory(directory):
 
 
 # The directories to be created if they don't exist.
-directories = ['csvs', 'pdfs', 'downloads', 'uploads',
+directories = ['csvs', 'pdfs', 'downloads', 'uploads', 'uploads/files',
                'uploads/photos', 'uploads/spreadsheets']
 
 for directory in directories:
