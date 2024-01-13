@@ -26,7 +26,6 @@ def index():
         delete_files('pdfs')
         delete_files('downloads')
         delete_files('uploads/files')
-        delete_files('uploads/invoices')
         delete_files('uploads/photos')
         delete_files('uploads/spreadsheets')
 
