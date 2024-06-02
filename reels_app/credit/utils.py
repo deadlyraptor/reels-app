@@ -13,15 +13,14 @@ class Film:
     """A class to represent a film and its AFI-style credits.
 
     The only attributes created when the class is instantiated are the
-    title and imdb_id, both of which are read from a spreadsheet.
+    title and tmdb_id, both of which are read from a spreadsheet.
 
     All other attributes are created by calling class methods.
 
     Attributes:
         title (str): the name of the film
-        imdb_id (str): the unique IMDb ID for the film, e.g. tt0094625
+        tmdb_id (str):  the unique TMDB ID for the film, e.g. 149-akira
 
-        tmdb_id (str):  the unique TMDB (TheMoveDatabase) ID for the film
         movie_info (str): a TMDB JSON response with the film's primary info
         directors (lst): a list of the film's directors
         writers (lst): a list of the film's writers
@@ -34,11 +33,10 @@ class Film:
         genres (lst): a list of the film's genres
     """
 
-    def __init__(self, title, imdb_id):
-        """Initialize the instance with the film's title and IMDB ID."""
+    def __init__(self, title, tmdb_id):
+        """Initialize the instance with the film's title and TMDB ID."""
         self.title = title
-        self.imdb_id = imdb_id
-        self.tmdb_id = None
+        self.tmdb_id = tmdb_id
         self.movie_info = None
         self.directors = []
         self.writers = []
@@ -50,11 +48,6 @@ class Film:
         self.rating = None
         self.genres = []
         self.trailer = None
-
-    def get_tmdb_id(self):
-        """Get the film's TMDB ID and assigns it to the tmdb_id attribute."""
-        response = tmdb.Find(self.imdb_id).info(external_source='imdb_id')
-        self.tmdb_id = response['movie_results'][0]['id']
 
     def get_movie_info(self):
         """Get the film's primary information."""
@@ -170,7 +163,7 @@ def get_credits(directory):
 
     for row in range(first_row, last_row):
         film = Film(title=ws.cell(row, 1).value,
-                    imdb_id=ws.cell(row, 2).value)
+                    tmdb_id=ws.cell(row, 2).value)
         films.append(film)
 
     # create a blank Word doc
@@ -178,7 +171,6 @@ def get_credits(directory):
 
     for film in films:
         # each class attribute is created by calling its associated method
-        film.get_tmdb_id()
         film.get_movie_info()
         film.get_release_date()
         film.get_runtime()

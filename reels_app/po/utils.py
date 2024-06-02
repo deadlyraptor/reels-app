@@ -8,7 +8,7 @@ from PyPDF2 import PdfReader
 
 
 def parse_deluxe_invoice(directory):
-    """Parse a Deluxe invoice an get key information.
+    """Parse a Deluxe invoice to get key information.
 
     Key info:
     - Invoice date

@@ -18,8 +18,8 @@ def write_genre_trailer(directory):
     wb = load_workbook(filename=f'{directory}/{manifest}')
     ws = wb.active
 
-    # Python's range functiion excludes the second parameter so we add 1 so it
-    # can be included, otherwise it will skip whatever film isi n the last row
+    # Python's range function excludes the second parameter so we add 1 so it
+    # can be included, otherwise it will skip whatever film is in the last row
 
     last_row = ws.max_row + 1
     first_row = 2
@@ -32,18 +32,17 @@ def write_genre_trailer(directory):
             pass
         else:
             film = Film(title=ws.cell(row, 1).value,
-                        imdb_id=ws.cell(row, 2).value)
+                        tmdb_id=ws.cell(row, 2).value)
             films.append(film)
 
     count = 0
     for film in films:
-        film.get_tmdb_id()
         film.get_movie_info()
         film.get_genres()
         film.get_trailer()
 
-        ws[f'G{first_row + count}'] = (', '.join(film.genres))
-        ws[f'H{first_row + count}'] = film.trailer
+        ws[f'E{first_row + count}'] = (', '.join(film.genres))
+        ws[f'F{first_row + count}'] = film.trailer
 
         count += 1
 
