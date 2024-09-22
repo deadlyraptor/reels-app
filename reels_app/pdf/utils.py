@@ -20,7 +20,7 @@ def rename_deluxe_invoices(directory):
 
         # get invoice number and strip new lines
         invoice_number = re.search(
-            '(?<=Invoice Date:)(.*)(?=Customer Account No:)(?s)',
+            '(?s)(?<=Invoice Date:)(.*)(?=Customer Account No:)',
             pdf_text).group(0).strip()
 
         # replace any illegal characters in the film title with a space
