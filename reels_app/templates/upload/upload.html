@@ -1,21 +1,38 @@
 {% extends 'base.html' %}
 {% block title %}{{ title }}{% endblock title %}
 {% block content %}
-<h1>{{ title }}</h1>
 
-<form method="POST" action="" enctype="multipart/form-data">
-    <div class="form-group">
-        <p><input type="file" name="file" multiple {% if function=='prep-deluxe-po' %} accept="all" {% else %}
-                accept=".{{ file_type }}" {% endif %}" class="form-control-file"></p>
-        <p><input type="submit" value="Upload file" class="btn btn-primary"></input></p>
+<div class="container">
+    <h1 class="is-size-1">{{ title }}</h1>
+
+    <form method="POST" action="" enctype="multipart/form-data">
+
+        <div class="form-group">
+            <div id="file-js" class="file has-name">
+                <label class="file-label">
+                    <input class="file-input" type="file" name="file" multiple {% if function=='prep-deluxe-po' %}
+                        accept="all" {% else %} accept=".{{ file_type }}" {% endif %}">
+                    <span class="file-cta">
+                        <span class="file-icon">
+                            <i class="fas fa-upload"></i>
+                        </span>
+                        <span class="file-label">Choose file(s)</span>
+                    </span>
+                    <span class="file-name">No file uploaded</span>
+                </label>
+            </div>
+            <input type="submit" value="Upload file" class="button is-primary"></input>
+        </div>
+    </form>
+
+    {% if function == 'prep-deluxe-po' %}
+    <div class="content">
+        <p><strong>!!!</strong> Upload both the Deluxe PO template and invoices at the
+            same time.</p>
     </div>
-</form>
+    {% endif %}
 
-{% if function == 'prep-deluxe-po' %}
-<p><strong>!!!</strong> Upload both the Deluxe PO template and invoices at the
-    same time.</p>
-{% endif %}
-
-<hr>
-<p><a href="{{ url_for('main.index') }}">Go back</a></p>
+    <hr>
+    <p><a href="{{ url_for('main.index') }}">Go back</a></p>
+</div>
 {% endblock content %}

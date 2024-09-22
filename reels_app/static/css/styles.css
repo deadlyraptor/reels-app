@@ -7,3 +7,16 @@ body {
     font-size: 1.5em;
     font-weight: 700;
 }
+
+.is-afi-background {
+    background-color: #cd1732;
+}
+
+.is-cgac-background {
+    background-color: #016a98;
+}
+
+.is-afi-text,
+.is-cgac-text {
+    color: #ffffff;
+}

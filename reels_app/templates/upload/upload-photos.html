@@ -1,22 +1,36 @@
 {% extends 'base.html' %}
 {% block title %}{{ title }}{% endblock title %}
 {% block content %}
-<h1>Upload Photos</h1>
 
-<form method="POST" action="" enctype="multipart/form-data">
-    <div class="form-group">
-        <p><input type="file" name="file" multiple accept="image/*" class="form-control-file"></p>
-        <p><input type="submit" value="Upload" class="btn btn-primary"></p>
+<div class="container">
+
+    <h1 class="is-size-1">Upload Photos</h1>
+
+    <form method="POST" action="" enctype="multipart/form-data">
+        <div class="form-group">
+            <div class="file">
+                <label class="file-label">
+                    <input type="file" name="file" multiple accept="image/*" class="form-control-file">
+                </label>
+            </div>
+            <input type="submit" value="Upload photos" class="button is-primary">
+        </div>
+    </form>
+
+    <div class="content">
+        <p>Drag and drop multiple photos over the 'Choose files' button to upload all at once.</p>
+
+        <p><strong>Note for CGAC users:</strong> Try not to upload stills or posters larger than 3 MB to the website;
+            there's no
+            need to waste space on the server (or time uploading large files). If you have files larger than 3MB, I
+            recommend
+            compressing the files using <a href="https://compressimage.io/">compressimmage.io</a> before uploading to
+            this
+            app.
+        </p>
     </div>
-</form>
 
-<p>Drag and drop multiple photos over the 'Choose files' button to upload all at once.</p>
-
-<p><strong>Note for CGAC users:</strong> Try not to upload stills or posters larger than 3 MB to the website; there's no
-    need to waste space on the server (or time uploading large files). If you have files larger than 3MB, I recommend
-    compressing the files using <a href="https://compressimage.io/">compressimmage.io</a> before uploading to this app.
-</p>
-
-<hr>
-<p><a href="{{ url_for('main.index') }}">Go back</a></p>
+    <hr>
+    <p><a href="{{ url_for('main.index') }}">Go back</a></p>
+</div>
 {% endblock content %}

@@ -1,22 +1,29 @@
 {% extends 'base.html' %}
 {% block title %}{{ title }}{% endblock title %}
 {% block content %}
-<h1>Download files</h1>
 
-{% if files %}
-<ul>
-    {% for file in files %}
-    <li>{{ file }}</li>
-    {% endfor %}
-</ul>
-{% else %}
-<p>There are no files to download.</p>
-{% endif %}
+<div class="container">
+    <h1 class="is-size-1">Download Files</h1>
 
-<form method="POST">
-    <p><input type="submit" value="Download files" class="btn btn-primary"></p>
-</form>
+    {% if files %}
+    <div class="content">
+        <ul>
+            {% for file in files %}
+            <li>{{ file }}</li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p>There are no files to download.</p>
+        {% endif %}
+    </div>
 
-<hr>
-<p><a href="{{ url_for('main.index') }}">Go back</a></p>
+    <form method="POST">
+        <p><input type="submit" value="Download files" class="button is-primary"></p>
+    </form>
+
+    <div class="content">
+        <hr>
+        <p><a href="{{ url_for('main.index') }}">Go back</a></p>
+    </div>
+</div>
 {% endblock content %}

@@ -2,110 +2,159 @@
 {% block title %}{{ title }}{% endblock title %}
 {% block content %}
 
-<h1>Reels</h1>
-
-<div class="row row-cols-1 row-cols-md-3 g-4">
-    <div class="col">
-        <div class="card text-bg-info h-100">
-            <div class="card-header">Coral Gables Art Cinema</div>
-            <div class="card-body d-flex flex-column">
-                <h5 class="card-title">Spreadchimp</h5>
-                <p class="card-text">Upload Agile's Customer Extract by Date report so the customer data can be
-                    reformatted as distinct
-                    CSV files (one per film) for easy upload to MailChimp.</p>
-                <a href="{{ url_for('spreadchimp.upload_spreadsheet') }}" class="btn btn-primary mt-auto">Upload
-                    spreadsheet</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="col">
-        <div class="card h-100">
-            <div class="card-header">Coral Gables Art Cinema / AFI Silver</div>
-            <div class="card-body d-flex flex-column">
-                <h5 class="card-title">Rename Photos</h5>
-                <p class="card-text">Batch rename photos according to the naming scheme <em>film-title-still-01</em>,
-                    e.g. <em>seven-samurai-still-01</em>.</p>
-                <a href="{{ url_for('rename.upload_photos') }}" class="btn btn-primary mt-auto">Upload photos</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="col">
-        <div class="card text-bg-warning h-100">
-            <div class="card-header">AFI Silver</div>
-            <div class="card-body d-flex flex-column">
-                <h5 class="card-title">Box Office Reports</h5>
-                <p class="card-text">Split the <em>Distributors By Film and Type</em> report into separate PDFs per
-                    film.</p>
-                <a href="{{ url_for('upload_file', file_type='pdf', function='box-office-report') }}"
-                    class="btn btn-primary mt-auto">Upload report</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="col">
-        <div class="card text-bg-warning h-100">
-            <div class="card-header">AFI Silver</div>
-            <div class="card-body d-flex flex-column">
-                <h5 class="card-title">Rename Deluxe Invoices</h5>
-                <p class="card-text">Rename a batch of Deluxe invoices according to internal AFI Silver style.</p>
-                <a href="{{ url_for('upload_file', file_type='pdf', function='rename-deluxe-invoices') }}"
-                    class="btn btn-primary mt-auto">Upload invoices</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="col">
-        <div class="card text-bg-warning h-100">
-            <div class="card-header">AFI Silver</div>
-            <div class="card-body d-flex flex-column">
-                <h5 class="card-title">Prep Deluxe PO</h5>
-                <p class="card-text">Generate a complete Deluxe PO using a template and invoices.</p>
-                <a href="{{ url_for('upload_file', file_type='xlsx', function='prep-deluxe-po') }}"
-                    class="btn btn-primary mt-auto">Upload PO</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="col">
-        <div class="card text-bg-warning h-100">
-            <div class="card-header">AFI Silver</div>
-            <div class="card-body d-flex flex-column">
-                <h5 class="card-title">Film Credits</h5>
-                <p class="card-text">Get a film's credits from The Movie Database (TMDB).</p>
-                <a href="{{ url_for('upload_file', file_type='xlsx', function='credits') }}"
-                    class="btn btn-primary mt-auto">Upload film list</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="col">
-        <div class="card text-bg-warning h-100">
-            <div class="card-header">AFI Silver</div>
-            <div class="card-body d-flex flex-column">
-                <h5 class="card-title">Film Genres & Trailer</h5>
-                <p class="card-text">Get a film's genres and a trailer from The Movie Database (TMDB).</p>
-                <a href="{{ url_for('upload_file', file_type='xlsx', function='genre-trailer') }}"
-                    class="btn btn-primary mt-auto">Upload film list</a>
-            </div>
-        </div>
-    </div>
-
+<div class="container">
+    <h1 class="is-size-1">Reels</h1>
 </div>
 
-<div class="row mt-5">
-    <p>Please use the button below to clean the app of all uploaded files once you have downloaded what you need. You
-        can also use this button to wipe the site clean if you upload the wrong file(s).</p>
-    <div class="col">
+<div class="container">
+    <div class="columns is-multiline">
+
+        <div class="column is-one-third">
+            <div class="card">
+                <div class="card-header is-cgac-background">
+                    <div class="card-header-title is-cgac-text">
+                        Coral Gables Art Cinema
+                    </div>
+                </div>
+                <div class="card-content">
+                    <h5 class="is-size-5">Spreadchimp</h5>
+                    <p>Upload Agile's Customer Extract by Date report so the customer data can be
+                        reformatted as distinct
+                        CSV files (one per film) for easy upload to MailChimp.</p>
+                </div>
+                <footer class="card-footer">
+                    <a href="{{ url_for('spreadchimp.upload_spreadsheet') }}" class="card-footer-item">Upload
+                        spreadsheet</a>
+                </footer>
+            </div>
+        </div>
+
+        <div class="column is-one-third">
+            <div class="card">
+                <div class="card-header is-cgac-background">
+                    <div class="card-header-title is-cgac-text">
+                        Coral Gables Art Cinema / AFI Silver
+                    </div>
+                </div>
+                <div class="card-content">
+                    <h5 class="is-size-5">Rename Photos</h5>
+                    <p>Batch rename photos according to the naming scheme <em>film-title-still-01</em>,
+                        e.g. <em>seven-samurai-still-01</em>.</p>
+                </div>
+                <footer class="card-footer">
+                    <a href="{{ url_for('rename.upload_photos') }}" class="card-footer-item">Upload photos</a>
+                </footer>
+            </div>
+        </div>
+
+        <div class="column is-one-third">
+            <div class="card">
+                <div class="card-header is-afi-background">
+                    <div class="card-header-title is-afi-text">
+                        AFI Silver
+                    </div>
+                </div>
+                <div class="card-content">
+                    <h5 class="is-size-5">Box Office Reports</h5>
+                    <p>Split the <em>Distributors By Film and Type</em> report into separate PDFs per film.</p>
+                </div>
+                <footer class="card-footer">
+                    <a href="{{ url_for('upload_file', file_type='pdf', function='box-office-report') }}"
+                        class="card-footer-item">Upload report</a>
+                </footer>
+            </div>
+        </div>
+
+        <div class="column is-one-third">
+            <div class="card">
+                <div class="card-header is-afi-background">
+                    <div class="card-header-title is-afi-text">
+                        AFI Silver
+                    </div>
+                </div>
+                <div class="card-content">
+                    <h5 class="is-size-5">Rename Deluxe Invoices</h5>
+                    <p>Rename a batch of Deluxe invoices according to internal AFI Silver style.</p>
+                </div>
+                <footer class="card-footer">
+                    <a href="{{ url_for('upload_file', file_type='pdf', function='rename-deluxe-invoices') }}"
+                        class="card-footer-item">Upload invoices</a>
+                </footer>
+            </div>
+        </div>
+
+        <div class="column is-one-third">
+            <div class="card">
+                <div class="card-header is-afi-background">
+                    <div class="card-header-title is-afi-text">
+                        AFI Silver
+                    </div>
+                </div>
+                <div class="card-content">
+                    <h5 class="is-size-5">Prep Deluxe PO</h5>
+                    <p>Generate a complete Deluxe PO using a template and invoices.</p>
+                </div>
+                <footer class="card-footer">
+                    <a href="{{ url_for('upload_file', file_type='xlsx', function='prep-deluxe-po') }}"
+                        class="card-footer-item">Upload PO</a>
+                </footer>
+            </div>
+        </div>
+
+        <div class="column is-one-third">
+
+            <div class="card">
+                <div class="card-header is-afi-background">
+                    <div class="card-header-title is-afi-text">
+                        AFI Silver
+                    </div>
+                </div>
+                <div class="card-content">
+                    <h5 class="is-size-5">Film Credits</h5>
+                    <p>Get a film's credits from The Movie Database (TMDB).</p>
+                </div>
+                <footer class="card-footer">
+                    <a href="{{ url_for('upload_file', file_type='xlsx', function='credits') }}"
+                        class="card-footer-item">Upload film list</a>
+                </footer>
+            </div>
+        </div>
+
+        <div class="column is-one-third">
+            <div class="card">
+                <div class="card-header is-afi-background">
+                    <div class="card-header-title is-afi-text">
+                        AFI Silver
+                    </div>
+                </div>
+                <div class="card-content">
+                    <h5 class="is-size-5">Film Genres & Trailer</h5>
+                    <p>Get a film's genres and a trailer from The Movie Database (TMDB).</p>
+                </div>
+                <footer class="card-footer">
+                    <a href="{{ url_for('upload_file', file_type='xlsx', function='genre-trailer') }}"
+                        class="card-footer-item">Upload film list</a>
+                </footer>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="container block">
+        <p class="content">Please use the button below to clean the app of all uploaded files once you have downloaded
+            what
+            you need. You can also use this button to wipe the site clean if you upload the wrong file(s).</p>
         <form method="POST">
-            <input type="submit" value="Delete uploaded files" class="btn btn-danger">
+            <input type="submit" value="Delete uploaded files" class="button is-danger">
         </form>
     </div>
-</div>
 
-<hr>
 
-{% include 'faq.html' %}
+    <div class="container">
+        <hr>
+        <div class="content">
+            {% include 'faq.html' %}
+        </div>
+    </div>
 
-{% endblock content %}
+    {% endblock content %}

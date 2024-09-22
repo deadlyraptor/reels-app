@@ -7,8 +7,9 @@
 
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/fontawesome.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/solid.min.css') }}">
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
@@ -33,30 +34,21 @@
 </head>
 
 <body>
-
-    <main class="container">
-        <div class="row">
-            <div class="column">
-                {% with messages = get_flashed_messages(with_categories=true) %}
-                {% if messages %}
-                <div class="alert">
-                    {% for category, message in messages %}
-                    <div class="alert alert-{{category}}">{{ message }}</div>
-                    {% endfor %}
-                </div>
-                {% endif %}
-                {% endwith %}
-
-                {% block content %}{% endblock content %}
-            </div>
+    <main class="section">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <div class="container">
+            {% for category, message in messages %}
+            <div class="notification is-{{category}}">{{ message }}</div>
+            {% endfor %}
         </div>
+        {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock content %}
     </main>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
-        crossorigin="anonymous"></script>
-
     {% block scripts %}
+    <script type="text/javascript" src="{{ url_for('static', filename='js/main.js' )}}"></script>
     {% endblock scripts %}
 </body>
 
