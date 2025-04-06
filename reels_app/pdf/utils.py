@@ -19,24 +19,25 @@ def rename_deluxe_invoices(directory):
         pdf_text = pdf.pages[0].extract_text()
 
         # get invoice number and strip new lines
-        invoice_number = re.search(
-            '(?s)(?<=Invoice Date:)(.*)(?=Customer Account No:)',
-            pdf_text).group(0).strip()
+        invoice_number = (
+            re.search("(?s)(?<=Invoice Date:)(.*)(?=Customer Account No:)", pdf_text)
+            .group(0)
+            .strip()
+        )
 
         # replace any illegal characters in the film title with a space
         # otherwise function will error due to filename issues
-        film_title = re.search(
-            '(?<=Title: )(.*)', pdf_text).group(0).strip().upper()
-        film_title_sanitized = re.sub(
-            '\"|\:|\/|\\|\<|\>|\||\?|\*|\n', ' ', film_title)
+        film_title = re.search("(?<=Title: )(.*)", pdf_text).group(0).strip().upper()
+        film_title_sanitized = re.sub('"|\:|\/|\\|\<|\>|\||\?|\*|\n', " ", film_title)
 
         pdf_writer = PdfWriter()
         pdf_writer.add_page(pdf.pages[0])
 
         # write to a new PDF
-        with open((f'downloads/Deluxe Inv {invoice_number} '
-                  f'{film_title_sanitized}.pdf'),
-                  mode='wb') as output_pdf:
+        with open(
+            (f"downloads/Deluxe Inv {invoice_number} {film_title_sanitized}.pdf"),
+            mode="wb",
+        ) as output_pdf:
             pdf_writer.write(output_pdf)
 
 
@@ -50,27 +51,38 @@ def split_box_office_report(directory):
     pdf = PdfReader(new_path)
 
     for page, unused in enumerate(pdf.pages):
-
         pdf_text = pdf.pages[page].extract_text()
+        # print(pdf_text)
 
         # search for the film title, located between the strings Film: and
         # DayTicket; some pages push DayTicket to a new line so the (?s) inline
         # flag ensures that those get captured as well
-        film_title = re.search('(?<=Film: )(.*)(?=Day)(?s)', pdf_text)
+        film = re.search("(?s)(?<=Film: )(.*)(?=Day)", pdf_text)
 
-        if film_title is None:
+        # search for the distributor, located between the strings 'Distributor:'
+        # and 'Film.' There are six spaces between the distributor string and
+        # the 'Film' string.
+        distributor = re.search("(?<=Distributor: )(.*)(?=      Film)", pdf_text)
+
+        if distributor is None:
+            distributor = "DISTRIB"
+        else:
+            distributor = distributor.group(0)
+
+        if film is None:
             # provides a default in case the regex returns None
-            new_film_title = f'box-office-page-{page}'
+            film = f"box-office-page-{page}"
         else:
             # replace any illegal characters with a space otherwise function
             # will error due to filename issues
-            new_film_title = re.sub(
-                '\"|\:|\/|\\|\<|\>|\||\?|\*|\n', ' ', film_title.group(1))
+            film = re.sub('"|\:|\/|\\|\<|\>|\||\?|\*|\n', "", film.group(1))
 
         # prepare the class that will write to a new PDF
         pdf_writer = PdfWriter()
         pdf_writer.add_page(pdf.pages[page])
 
         # write to a new PDF
-        with open(f'downloads/{new_film_title}-{page}.pdf', mode='wb') as output_pdf:
+        with open(
+            f"downloads/{distributor}-{film}-{page}.pdf", mode="wb"
+        ) as output_pdf:
             pdf_writer.write(output_pdf)
