@@ -64,6 +64,9 @@ def split_box_office_report(directory):
         # the 'Film' string.
         distributor = re.search("(?<=Distributor: )(.*)(?=      Film)", pdf_text)
 
+        # some pages in the report do not have the distributor field so when
+        # that page is reached, we set distributor to a default value of
+        # 'DISTRIB' to ensure that the PDF can be written without error
         if distributor is None:
             distributor = "DISTRIB"
         else:
@@ -71,7 +74,7 @@ def split_box_office_report(directory):
 
         if film is None:
             # provides a default in case the regex returns None
-            film = f"box-office-page-{page}"
+            film = "box-office-page"
         else:
             # replace any illegal characters with a space otherwise function
             # will error due to filename issues
