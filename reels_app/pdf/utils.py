@@ -92,6 +92,6 @@ def split_box_office_report(directory):
 
         # write to a new PDF
         with open(
-            f"downloads/{distributor}-{current_date}-{film}-{page}.pdf", mode="wb"
+            f"downloads/{distributor} {current_date} {film} {page}.pdf", mode="wb"
         ) as output_pdf:
             pdf_writer.write(output_pdf)
