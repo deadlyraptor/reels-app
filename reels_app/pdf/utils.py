@@ -1,3 +1,4 @@
+from datetime import datetime
 import os
 import re
 
@@ -82,12 +83,15 @@ def split_box_office_report(directory):
             # will error due to filename issues
             film = re.sub('"|\:|\/|\\|\<|\>|\||\?|\*|\n', "", film.group(1))
 
+        # get and format the current date for use in filename
+        current_date = datetime.now().strftime("%Y.%m.%d")
+
         # prepare the class that will write to a new PDF
         pdf_writer = PdfWriter()
         pdf_writer.add_page(pdf.pages[page])
 
         # write to a new PDF
         with open(
-            f"downloads/{distributor}-{film}-{page}.pdf", mode="wb"
+            f"downloads/{distributor}-{current_date}-{film}-{page}.pdf", mode="wb"
         ) as output_pdf:
             pdf_writer.write(output_pdf)
