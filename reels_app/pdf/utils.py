@@ -66,8 +66,10 @@ def split_box_office_report(directory):
 
         # some pages in the report do not have the distributor field so when
         # that page is reached, we set distributor to a default value of
-        # 'DISTRIB' to ensure that the PDF can be written without error
-        if distributor is None:
+        # 'DISTRIB' to ensure that the PDF can be written without error.
+        # on Macs, files starting with a . are hidden files so we change the
+        # default distributor value to another placeholder where appropriate
+        if distributor is None or distributor.group(0) == "...":
             distributor = "DISTRIB"
         else:
             distributor = distributor.group(0)
