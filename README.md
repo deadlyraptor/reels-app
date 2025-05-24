@@ -9,7 +9,7 @@ on their workstations. reels-app runs on Render's free tier.
 
 ## Requirements
 
-* Flask==2.3.2
-* guincorn==20.1.0
-* openpyxl==3.1.2
+* Flask==3.1.1
+* guincorn==23.0.0
+* openpyxl==3.1.5
 * PyPDF2==3.0.1
